@@ -1,0 +1,23 @@
+@import './custom.scss';
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+// html {
+//     height: fill-available;
+//     height: -webkit-fill-available;
+// }
+
+body {
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    // min-height: 100vh;
+    // min-height: fill-available;
+    // min-height: -webkit-fill-available;
+    // display: flex;
+    // flex-direction: column;
+    position: relative;
+}
