@@ -24,6 +24,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@onsvisual/svelte-maps": "^1.0.32",
+		"@turf/bbox": "^6.5.0",
+		"@turf/centroid": "^6.5.0",
 		"bootstrap": "^5.2.0",
 		"bootstrap-icons": "^1.9.1",
 		"d3-array": "^3.2.0",
@@ -31,6 +34,7 @@
 		"d3-scale-chromatic": "^3.0.0",
 		"maplibre-gl": "^2.1.9",
 		"polygon-lookup": "^2.6.0",
-		"topojson": "^3.0.2"
+		"simple-svelte-autocomplete": "^2.4.0",
+		"topojson-client": "^3.1.0"
 	}
 }
