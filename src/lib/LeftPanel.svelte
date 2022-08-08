@@ -4,31 +4,26 @@
 	import Bar from '$lib/Bar.svelte';
 	import TwitterButton from '$lib/TwitterButton.svelte';
 	import FacebookButton from '$lib/FacebookButton.svelte';
-	const KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+	import Sentence from '$lib/Sentence.svelte';
+
+	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+	const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
 	const resetPOI = () => {
 		selectedAddress.set(null);
 	};
 
-	$: text = `A #Milano in ${$selectedAddress?.address}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di NO2. Scopri quanta NO2 respiri a Milano con la mappa di Cittadini per l'aria!`;
+	$: text = `A #Milano in ${$selectedAddress?.readableAddress}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di NO2. Scopri quanta NO2 respiri a Milano con la mappa di Cittadini per l'aria!`;
 	$: url = $page.url.href;
 	const hashtags = 'inquinamento,sala';
 	const via = 'citizensforair';
 
-	// const params = {
-	//       location: `${chunk.coordinates[1]},${chunk.coordinates[0]}`,
-	//       size: "640x640",
-	//       heading: chunk.right,
-	//       //source: "outdoor",
-	//       key: GOOGLE_API_KEY,
-	//       fov:30,
-	//       pitch:-10
-	//     };
-	// const url = "https://maps.googleapis.com/maps/api/streetview";
+	$: googleSatelliteUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&zoom=19&scale=2&size=400x400&maptype=satellite&key=${GOOGLE_API_KEY}&format=png`;
+	$: streetviewUrl = `https://maps.googleapis.com/maps/api/streetview?size=400x400&key=${GOOGLE_API_KEY}&location=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}`;
 </script>
 
-<div class="leftPanel w-100 h-100 bg-white rounded shadow-sm p-3">
-	<div class="d-flex">
+<div class="rightPanel w-100 h-100 bg-white rounded shadow-sm p-3">
+	<!-- <div class="d-flex">
 		<button
 			aria-label="close"
 			on:click={resetPOI}
@@ -36,16 +31,8 @@
 		>
 			<i class="bi bi-x-lg" />
 		</button>
-	</div>
+	</div> -->
 	<div>
-		<p class="m-0">
-			<small class="text-uppercase text-black-50">indirizzo</small>
-		</p>
-		<p>
-			{$selectedAddress?.address}
-		</p>
-	</div>
-	<div class="mt-2">
 		<p class="m-0">
 			<small class="text-uppercase text-black-50"
 				>concentrazione di NO<sub>2</sub>
@@ -55,6 +42,29 @@
 		<p>
 			<Bar value={$selectedAddress?.value} />
 		</p>
+	</div>
+	<div class="mt-2">
+		<p class="m-0">
+			<small class="text-uppercase text-black-50">indirizzo</small>
+		</p>
+		<div class="d-flex">
+			<div class="w-50">
+				<p>
+					{$selectedAddress?.readableAddress}
+				</p>
+			</div>
+
+			<div class="w-50">
+				{#if $selectedAddress?.type === 'address'}
+					<img class="img-fluid mt-2" src={streetviewUrl} alt="street view perview" />
+				{:else}
+					<img class="img-fluid mt-2" src={googleSatelliteUrl} alt="satellite perview" />
+				{/if}
+			</div>
+		</div>
+	</div>
+	<div class="mt-2">
+		<Sentence value={$selectedAddress?.value} />
 	</div>
 	<div class="mt-2">
 		<p class="m-0">
@@ -79,5 +89,9 @@
 	.closeBtn {
 		width: 35px;
 		height: 35px;
+	}
+
+	.rightPanel {
+		overflow-y: auto;
 	}
 </style>

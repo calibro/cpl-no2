@@ -1,7 +1,7 @@
 <script>
 	import { bboxGrid, selectedAddress } from '$lib/stores';
 	import AutoComplete from 'simple-svelte-autocomplete';
-
+	export let id;
 	let selectedFeature;
 
 	async function forwardGeocode(keyword) {
@@ -14,6 +14,12 @@
 				feature.bbox[0] + (feature.bbox[2] - feature.bbox[0]) / 2,
 				feature.bbox[1] + (feature.bbox[3] - feature.bbox[1]) / 2
 			];
+			const readableAddress = `${feature.properties.address.road}${
+				feature.properties.address.house_number
+					? ', ' + feature.properties.address.house_number
+					: ''
+			}`;
+
 			let point = {
 				type: 'address',
 				feature: {
@@ -26,6 +32,7 @@
 				},
 
 				address: feature.properties.display_name,
+				readableAddress: readableAddress,
 				id: feature.properties.place_id
 			};
 			features.push(point);
@@ -34,12 +41,15 @@
 	}
 
 	$: {
-		selectedAddress.set(selectedFeature);
+		if (selectedFeature) {
+			selectedAddress.set(selectedFeature);
+		}
 	}
 </script>
 
 <div class="w-100 autocompleteContainer">
 	<AutoComplete
+		inputId={id}
 		searchFunction={forwardGeocode}
 		delay="200"
 		localFiltering={false}
@@ -48,8 +58,8 @@
 		valueFieldName="id"
 		bind:selectedItem={selectedFeature}
 		className="w-100"
-		inputClassName="form-control"
-		placeholder="dove abiti?"
+		inputClassName="form-control form-control-lg"
+		placeholder="cerca un indirizzo..."
 		noResultsText="nessun indirizzo trovato"
 		maxItemsToShowInList={5}
 		hideArrow={true}

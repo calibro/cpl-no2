@@ -3,7 +3,8 @@
 	import { selectedAddress } from '$lib/stores';
 	import Map from '$lib/Map.svelte';
 	import LeftPanel from '$lib/LeftPanel.svelte';
-	import IntroPanel from '../lib/introPanel.svelte';
+	import IntroPanel from '$lib/introPanel.svelte';
+	import AddressSearch from '$lib/AddressSearch.svelte';
 
 	let showInfoPanel = true;
 	let showInfoFirst = true;
@@ -32,6 +33,12 @@
 	</div>
 {/if}
 
+{#if !showInfoFirst}
+	<div transition:fade class="adderssSearchContainer position-absolute">
+		<AddressSearch id="map_address" />
+	</div>
+{/if}
+
 {#if showInfoPanel && showInfoFirst}
 	<div transition:fade class="introPanelContainer position-absolute w-100 h-100">
 		<IntroPanel />
@@ -50,5 +57,11 @@
 	}
 
 	.introPanelContainer {
+	}
+
+	.adderssSearchContainer {
+		top: 20px;
+		left: 20px;
+		width: 250px;
 	}
 </style>

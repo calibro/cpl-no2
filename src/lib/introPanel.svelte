@@ -21,7 +21,7 @@
 			Scopri la concentrazione annua di NO<sub>2</sub> inserende un indirizzo a Milano (dove abiti per
 			esempio) o selezionando una scuola.
 		</p>
-		<AddressSearch />
+		<AddressSearch id="intro_address" />
 	</div>
 </div>
 

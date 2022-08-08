@@ -1,13 +1,15 @@
 <script>
 	import { colorScale, bboxGrid, selectedAddress } from '$lib/stores';
 	import { onMount, onDestroy } from 'svelte';
-	import { Map, NavigationControl, Marker } from 'maplibre-gl';
+	import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
 	import { feature } from 'topojson-client';
 	import { bbox } from 'topojson-client';
 	import centroidTurf from '@turf/centroid';
 	import PolygonLookup from 'polygon-lookup';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import gridRawData from '$lib/data/grid.json';
+
+	const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
 	let map;
 	let mapContainer;
@@ -72,14 +74,36 @@
 		map = new Map({
 			container: mapContainer,
 			style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-			//style: `https://api.maptiler.com/maps/streets/style.json?key=${apiKey}`,
+			//style: `https://api.maptiler.com/maps/streets/style.json?key=${MAPTILER_API_KEY}`,
 			bounds: $bboxGrid,
 			fitBoundsOptions: { padding: 20 },
 			maxZoom: 16,
 			minZoom: 11
 			// maxBounds: bboxGrid to buffer it
 		});
-		map.addControl(new NavigationControl(), 'top-left');
+
+		const geolocate = new GeolocateControl({
+			positionOptions: {
+				enableHighAccuracy: true
+			}
+		});
+
+		geolocate.on('geolocate', function (event) {
+			const square = lookup.search(event.coords.longitude, event.coords.latitude);
+			const centroid = centroidTurf(square);
+			selectedAddress.set({
+				type: 'grid',
+				address: centroid.geometry.coordinates.map((d) => d.toFixed(5)).join(','),
+				readableAddress: centroid.geometry.coordinates.map((d) => d.toFixed(5)).join(','),
+				value: square.properties.NO2_stima,
+				feature: { ...centroid, proporties: square.properties },
+				square: square
+			});
+		});
+
+		map.addControl(geolocate, 'bottom-left');
+		map.addControl(new NavigationControl({ showCompass: false }), 'bottom-left');
+
 		map.on('load', function () {
 			map.addSource('grid', {
 				type: 'geojson',
@@ -146,6 +170,7 @@
 			selectedAddress.set({
 				type: 'grid',
 				address: centroid.geometry.coordinates.map((d) => d.toFixed(5)).join(','),
+				readableAddress: centroid.geometry.coordinates.map((d) => d.toFixed(5)).join(','),
 				value: e.features[0].properties.NO2_stima,
 				feature: { ...centroid, proporties: e.features[0].properties },
 				square: e.features[0]
@@ -167,5 +192,21 @@
 		position: absolute;
 		width: 100%;
 		height: 100%;
+	}
+
+	.map :global(.mapboxgl-user-location-accuracy-circle),
+	.map :global(.mapboxgl-user-location-dot) {
+		display: none;
+	}
+
+	.map :global(.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl),
+	.map :global(.maplibregl-ctrl-bottom-left .maplibregl-ctrl) {
+		margin: 0 0 20px 20px;
+	}
+
+	.map :global(.mapboxgl-ctrl-group button),
+	.map :global(.maplibregl-ctrl-group button) {
+		width: 35px;
+		height: 35px;
 	}
 </style>

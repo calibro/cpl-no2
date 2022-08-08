@@ -1,10 +1,12 @@
 <script>
+	import { tweened } from 'svelte/motion';
 	import { colorScale } from '$lib/stores';
 	import { scaleLinear } from 'd3-scale';
 	import { range } from 'd3-array';
 	export let value;
 
 	let bgW;
+	const tValue = tweened(0);
 	$: steps = range(bgW);
 	$: localScale = scaleLinear().domain([0, bgW]).range($colorScale.domain());
 	$: marginScale = scaleLinear().range([0, 100]).domain($colorScale.domain());
@@ -13,6 +15,8 @@
 		{ value: 30, text: "Soglia dell'OMS per la tutela della salute" },
 		{ value: 50, text: 'Limite di legge al momento attuale' }
 	];
+
+	$: tValue.set(value);
 </script>
 
 <div class="barContainer w-100">
@@ -37,7 +41,7 @@
 			style="margin-left:{marginScale(value)}%;color:{$colorScale(value)};"
 			class="value my-1 fw-bold rounded-circle bg-white d-flex align-items-center justify-content-center position-relative"
 		>
-			{Math.round(value)}
+			{Math.round($tValue)}
 		</div>
 	</div>
 	<div class="w-100 position-relative mt-1 mb-5">
