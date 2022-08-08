@@ -2,7 +2,7 @@
 	import AddressSearch from '$lib/AddressSearch.svelte';
 </script>
 
-<div class="w-100 h-100 bg-dark bg-opacity-25 d-flex align-items-center justify-content-center">
+<div class="w-100 h-100 bg-dark bg-opacity-25 d-flex align-items-center justify-content-center p-3">
 	<div class="infoContainer bg-white rounded p-3">
 		<h4 class="title text-uppercase">NO<sub>2</sub>, No grazie!</h4>
 		<div class="text-body">
@@ -27,10 +27,16 @@
 
 <style>
 	.infoContainer {
-		width: 350px;
+		width: 100%;
 	}
 
 	.title {
 		font-weight: 900;
+	}
+
+	@media (min-width: 768px) {
+		.infoContainer {
+			width: 350px;
+		}
 	}
 </style>

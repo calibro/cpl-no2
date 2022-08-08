@@ -2,13 +2,12 @@
 	import { colorScale, bboxGrid, selectedAddress } from '$lib/stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
-	import { feature } from 'topojson-client';
-	import { bbox } from 'topojson-client';
+	import { feature, bbox } from 'topojson-client';
 	import centroidTurf from '@turf/centroid';
 	import PolygonLookup from 'polygon-lookup';
 	import 'maplibre-gl/dist/maplibre-gl.css';
-	import gridRawData from '$lib/data/grid.json';
-
+	//import gridRawData from '$lib/data/grid.json';
+	export let gridRawData;
 	const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
 	let map;

@@ -2,8 +2,8 @@
 	import { tweened } from 'svelte/motion';
 	export let value;
 
-	const percentage = tweened(0);
-	const tValue = tweened(0);
+	const percentage = tweened(undefined);
+	const tValue = tweened(undefined);
 
 	const deseases = {
 		'di mortalità': 4,

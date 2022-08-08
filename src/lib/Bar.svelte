@@ -6,7 +6,7 @@
 	export let value;
 
 	let bgW;
-	const tValue = tweened(0);
+	const tValue = tweened(undefined);
 	$: steps = range(bgW);
 	$: localScale = scaleLinear().domain([0, bgW]).range($colorScale.domain());
 	$: marginScale = scaleLinear().range([0, 100]).domain($colorScale.domain());
