@@ -117,7 +117,7 @@
 			top: 20px;
 			right: 20px;
 			bottom: 20px;
-			width: 490px;
+			width: 450px;
 			height: calc(100% - 40px);
 			z-index: 2;
 		}

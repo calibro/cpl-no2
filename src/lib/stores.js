@@ -1,13 +1,13 @@
 import { writable, readable } from 'svelte/store';
 import { scaleSequential } from 'd3-scale';
-import { interpolatePlasma } from 'd3-scale-chromatic';
+import { interpolatePlasma, interpolateWarm } from 'd3-scale-chromatic';
 
 export const bboxGrid = writable(null);
 export const selectedAddress = writable(null);
 
-const colorDomain = [20, 60];
+const colorDomain = [0, 60];
 export const colorScale = readable(
-	scaleSequential((t) => interpolatePlasma(1 - t))
+	scaleSequential((t) => interpolateWarm(1 - t))
 		.domain(colorDomain)
 		.clamp(true)
 );

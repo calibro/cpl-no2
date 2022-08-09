@@ -12,8 +12,8 @@
 	$: marginScale = scaleLinear().range([0, 100]).domain($colorScale.domain());
 
 	const annotations = [
-		{ value: 30, text: "Soglia dell'OMS per la tutela della salute" },
-		{ value: 50, text: 'Limite di legge al momento attuale' }
+		{ value: 10, text: "Soglia dell'OMS per la tutela della salute" },
+		{ value: 40, text: 'Limite di legge al momento attuale' }
 	];
 
 	$: tValue.set(value);
