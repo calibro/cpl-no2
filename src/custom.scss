@@ -1,3 +1,22 @@
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$custom-colors: (
+    "purple":#494266,
+    "indigo":#2F2F4A
+);
+
+$custom-sizes: (
+    7:0.75rem
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+$font-sizes: map-merge($font-sizes, $custom-sizes);
+
+$body-color: white;
+
 $font-family-sans-serif: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';

@@ -59,7 +59,7 @@
 		bind:selectedItem={selectedFeature}
 		className="w-100"
 		inputClassName="form-control form-control-lg"
-		placeholder="cerca un indirizzo..."
+		placeholder="cerca"
 		noResultsText="nessun indirizzo trovato"
 		maxItemsToShowInList={5}
 		hideArrow={true}
@@ -69,6 +69,10 @@
 
 <style>
 	.autocompleteContainer :global(.autocomplete-list-item.selected) {
-		background-color: var(--bs-danger) !important;
+		background-color: var(--bs-purple) !important;
+	}
+
+	.autocompleteContainer :global(.autocomplete) {
+		height: 2.625rem !important;
 	}
 </style>
