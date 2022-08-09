@@ -2,6 +2,7 @@
 	import AddressSearch from '$lib/AddressSearch.svelte';
 	import { selectedAddress } from '$lib/stores';
 	import Box from '$lib/Box.svelte';
+	import { base } from '$app/paths';
 
 	const defaultAddress = {
 		address: 'Via Carlo Poerio, Buenos Aires - Venezia, Municipio 3, Milan, Lombardy, 20219, Italy',
@@ -52,7 +53,7 @@
 					role="button"
 					class="btn btn-light rounded-pill"
 					target="_blank"
-					><img src="/logo.png" class="img-fluid" alt="logo cittadini per l'aria" /></a
+					><img src={`${base}/logo.png`} class="img-fluid" alt="logo cittadini per l'aria" /></a
 				>
 			</div>
 		</Box>
