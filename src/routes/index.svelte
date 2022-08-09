@@ -16,10 +16,11 @@
 	import { fade } from 'svelte/transition';
 	import { selectedAddress } from '$lib/stores';
 	import Map from '$lib/Map.svelte';
-	import LeftPanel from '$lib/LeftPanel.svelte';
+	import RightPanel from '$lib/RightPanel.svelte';
 	import IntroPanel from '$lib/introPanel.svelte';
 	import AddressSearch from '$lib/AddressSearch.svelte';
 	import { swipe } from 'svelte-gestures';
+	import Box from '$lib/Box.svelte';
 	export let grid;
 
 	let showInfoPanel = true;
@@ -57,19 +58,21 @@
 {#if $selectedAddress}
 	<div
 		transition:fade
-		class="leftPanelContainer position-absolute"
+		class="rightPanelContainer position-absolute"
 		class:topRightPanel
 		on:click={toggleTop}
 		use:swipe={{ timeframe: 300, minSwipeDistance: 60 }}
 		on:swipe={handler}
 	>
-		<LeftPanel />
+		<RightPanel />
 	</div>
 {/if}
 
 {#if !showInfoFirst}
 	<div transition:fade class="adderssSearchContainer position-absolute">
-		<AddressSearch id="map_address" />
+		<Box>
+			<AddressSearch id="map_address" />
+		</Box>
 	</div>
 {/if}
 
@@ -83,7 +86,7 @@
 	.mapContainer {
 	}
 
-	.leftPanelContainer {
+	.rightPanelContainer {
 		top: 0;
 		height: 100%;
 		width: 100%;
@@ -107,14 +110,15 @@
 
 	@media (min-width: 768px) {
 		.adderssSearchContainer {
-			width: 250px;
+			width: 350px;
 		}
 
-		.leftPanelContainer {
+		.rightPanelContainer {
 			top: 20px;
 			right: 20px;
 			bottom: 20px;
 			width: 490px;
+			height: calc(100% - 40px);
 			z-index: 2;
 		}
 	}

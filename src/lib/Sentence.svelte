@@ -25,7 +25,13 @@
 	$: tValue.set(value);
 </script>
 
-<p>
-	L'esposizione a {Math.round($tValue)} µg/m3 di N0<sub>2</sub> comporta un aumento del rischio {desease}
-	del {Math.round($percentage)}%.
+<p class="fs-5 mb-0">
+	L'esposizione a <b>{Math.round($tValue)} µg/m3</b> di N0<sub>2</sub> comporta un aumento del
+	rischio {desease}
+	del <b>{Math.round($percentage)}%</b>.
 </p>
+
+<!-- <p class="fs-5 mb-0">
+	Esistono inoltre prove inconfutabili che indicano la comparsa di sintomi respiratori quali
+	irritazione, tosse, respirazione superficiale e difficoltà respiratorie.
+</p> -->
