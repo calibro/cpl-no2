@@ -9,6 +9,7 @@
 	import TelegramButton from '$lib/TelegramButton.svelte';
 	import Sentence from '$lib/Sentence.svelte';
 
+	export let togglePanel, panelOpen;
 	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 	const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
@@ -24,26 +25,39 @@
 	$: googleSatelliteUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&zoom=19&scale=2&size=458x165&maptype=satellite&key=${GOOGLE_API_KEY}&format=png`;
 	$: streetviewUrl = `https://maps.googleapis.com/maps/api/streetview?size=458x165&key=${GOOGLE_API_KEY}&location=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}`;
 	$: bgUrl = $selectedAddress?.type === 'address' ? streetviewUrl : googleSatelliteUrl;
+
+	const onScroll = (e) => {
+		if (e.target.scrollTop === 0) {
+			togglePanel();
+		}
+	};
 </script>
 
-<div class="rightPanel w-100 h-100 bg-indigo rounded shadow-sm p-3">
-	<!-- <div class="d-flex">
-		<button
-			aria-label="close"
-			on:click={resetPOI}
-			class="closeBtn btn btn-light ms-auto rounded-circle p- d-flex align-items-center justify-content-center"
+<div
+	style="overflow:{!panelOpen ? 'auto' : 'hidden'}"
+	class="rightPanel w-100 h-100 bg-indigo shadow-sm p-3 pt-0 p-md-3"
+	on:scroll={onScroll}
+>
+	<div class="d-md-none d-grid">
+		<div
+			on:click={() => togglePanel()}
+			aria-label="open and close information panel"
+			class="d-flex align-items-center justify-content-center"
 		>
-			<i class="bi bi-x-lg" />
-		</button>
-	</div> -->
+			<i
+				class="bi"
+				class:bi-chevron-compact-up={panelOpen}
+				class:bi-chevron-compact-down={!panelOpen}
+			/>
+		</div>
+	</div>
 	<Box>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">
 			concentrazione di NO<sub>2</sub>
 			<span class="text-lowercase">(µg/m<sup>3</sup>)</span>
 		</p>
-		<p>
-			<Bar value={$selectedAddress?.value} />
-		</p>
+
+		<Bar value={$selectedAddress?.value} />
 	</Box>
 	<Box height={'165px'} background={`url(${bgUrl})`}>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
@@ -100,12 +114,9 @@
 </div>
 
 <style>
-	/* .closeBtn {
-		width: 35px;
-		height: 35px;
-	} */
-
-	.rightPanel {
-		overflow-y: auto;
+	@media (min-width: 768px) {
+		.rightPanel {
+			overflow-y: auto !important;
+		}
 	}
 </style>

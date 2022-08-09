@@ -1,10 +1,28 @@
 <script>
 	import AddressSearch from '$lib/AddressSearch.svelte';
+	import { selectedAddress } from '$lib/stores';
 	import Box from '$lib/Box.svelte';
+
+	const defaultAddress = {
+		address: 'Via Carlo Poerio, Buenos Aires - Venezia, Municipio 3, Milan, Lombardy, 20219, Italy',
+		feature: {
+			geometry: { coordinates: [9.2101497, 45.47164909999999], type: 'Point' },
+			type: 'Feature'
+		},
+		id: 149178192,
+		readableAddress: 'Via Carlo Poerio',
+		type: 'address'
+	};
+
+	const seelctDefaultAddress = () => {
+		selectedAddress.set(defaultAddress);
+	};
 </script>
 
-<div class="w-100 h-100 bg-dark bg-opacity-25 d-flex align-items-center justify-content-center p-3">
-	<div class="infoContainer bg-indigo rounded p-3">
+<div
+	class="w-100 h-100 bg-indigo bg-opacity-75 d-flex align-items-center justify-content-center overflow-hidden"
+>
+	<div class="infoContainer bg-indigo rounded-md p-3 d-flex flex-column">
 		<Box>
 			<h6 class="mb-3 text-uppercase">NO<sub>2</sub>, No grazie!</h6>
 
@@ -21,7 +39,11 @@
 		</Box>
 		<Box>
 			<AddressSearch id="intro_address" />
+			<button on:click={seelctDefaultAddress} class="btn btn-light rounded-pill mt-3 w-100">
+				...o esplora la mappa
+			</button>
 		</Box>
+
 		<Box>
 			<div class="d-flex align-items-center">
 				<div class="text-uppercase me-2 fs-7 fw-bold flex-grow-0 flex-shrink-0">un progetto di</div>
@@ -40,6 +62,8 @@
 <style>
 	.infoContainer {
 		width: 100%;
+		overflow-y: auto;
+		height: 100%;
 	}
 
 	.question {
@@ -53,6 +77,8 @@
 	@media (min-width: 768px) {
 		.infoContainer {
 			width: 350px;
+			height: auto;
+			max-height: 100%;
 		}
 	}
 </style>

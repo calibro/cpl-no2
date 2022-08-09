@@ -3,10 +3,16 @@
 	import AutoComplete from 'simple-svelte-autocomplete';
 	export let id;
 	let selectedFeature;
+	let showClear;
 
 	async function forwardGeocode(keyword) {
+		if (keyword.length > 1) {
+			showClear = true;
+		} else {
+			showClear = false;
+		}
 		const features = [];
-		let request = `https://nominatim.openstreetmap.org/search?q="${keyword}"&format=geojson&polygon_geojson=1&addressdetails=1&countrycodes=it&bounded=1&viewbox=${$bboxGrid.join()}`;
+		let request = `https://nominatim.openstreetmap.org/search?q="${keyword}"&format=geojson&polygon_geojson=1&addressdetails=1&countrycodes=it&bounded=1&viewbox=${$bboxGrid.join()}&accept-language=it`;
 		const response = await fetch(request);
 		const geojson = await response.json();
 		for (let feature of geojson.features) {
@@ -59,10 +65,11 @@
 		bind:selectedItem={selectedFeature}
 		className="w-100"
 		inputClassName="form-control form-control-lg"
-		placeholder="cerca"
+		placeholder="inserisci un indirizzo..."
 		noResultsText="nessun indirizzo trovato"
 		maxItemsToShowInList={5}
 		hideArrow={true}
+		{showClear}
 		disabled={!$bboxGrid.length}
 	/>
 </div>

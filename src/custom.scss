@@ -20,3 +20,13 @@ $body-color: white;
 $font-family-sans-serif: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/utilities";
+
+$utilities: map-merge($utilities, ("rounded": map-merge(map-get($utilities, "rounded"),
+                (responsive: true),
+            ),
+        ));

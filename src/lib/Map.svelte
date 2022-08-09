@@ -1,5 +1,5 @@
 <script>
-	import { colorScale, bboxGrid, selectedAddress } from '$lib/stores';
+	import { colorScale, bboxGrid, selectedAddress, mediaQuery } from '$lib/stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
 	import { feature, bbox } from 'topojson-client';
@@ -12,6 +12,10 @@
 	let map;
 	let mapContainer;
 	let hoveredStateId;
+
+	const md = mediaQuery('(min-width: 768px)');
+
+	$: padding = $md ? { right: 450 } : { bottom: 150, top: 75 };
 
 	const grid = feature(gridRawData, gridRawData.objects.test);
 	bboxGrid.set(bbox(gridRawData));
@@ -29,9 +33,10 @@
 				return d;
 			});
 			if (map) {
-				map.flyTo({
+				map.easeTo({
 					center: $selectedAddress.feature.geometry.coordinates,
-					zoom: 17
+					zoom: 17,
+					padding: padding
 				});
 
 				map.getSource('selectedGrid').setData({
@@ -48,7 +53,8 @@
 
 				map.flyTo({
 					center: $selectedAddress.feature.geometry.coordinates,
-					zoom: 17
+					zoom: 17,
+					padding: padding
 				});
 			}
 		} else if (!$selectedAddress && map?.getSource('selectedGrid')) {
@@ -197,6 +203,11 @@
 		display: none;
 	}
 
+	.map :global(.mapboxgl-ctrl-bottom-left),
+	.map :global(.maplibregl-ctrl-bottom-left) {
+		bottom: 155px;
+	}
+
 	.map :global(.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl),
 	.map :global(.maplibregl-ctrl-bottom-left .maplibregl-ctrl) {
 		margin: 0 0 20px 20px;
@@ -225,5 +236,12 @@
 	.map :global(.mapboxgl-ctrl button.mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon),
 	.map :global(.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon) {
 		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='29' height='29' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' fill='white'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1zm0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7z'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E");
+	}
+
+	@media (min-width: 768px) {
+		.map :global(.mapboxgl-ctrl-bottom-left),
+		.map :global(.maplibregl-ctrl-bottom-left) {
+			bottom: 0px;
+		}
 	}
 </style>
