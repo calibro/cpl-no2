@@ -58,10 +58,11 @@
 	<div class="w-100 position-relative mt-2 d-flex">
 		{#each annotations as annotation, i}
 			<div
-				style="margin-{i ? 'right' : 'left'}:{i
-					? 100 - marginScale(annotation.value)
-					: marginScale(annotation.value)}%;"
+				style="margin-left:{i ? 0 : marginScale(annotation.value)}%;left:{i
+					? marginScale(annotation.value)
+					: 0}%;"
 				class="annotationText fs-7 text-center lh-1"
+				class:position-absolute={i > 0}
 			>
 				{annotation.text}
 			</div>
@@ -96,8 +97,7 @@
 	}
 
 	.annotationText {
-		flex: 0 0 auto;
-		width: 150px;
+		max-width: 150px;
 		transform: translateX(-50%);
 	}
 </style>

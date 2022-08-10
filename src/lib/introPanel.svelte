@@ -5,13 +5,13 @@
 	import { base } from '$app/paths';
 
 	const defaultAddress = {
-		address: 'Via Carlo Poerio, Buenos Aires - Venezia, Municipio 3, Milan, Lombardy, 20219, Italy',
+		address: 'Piazza del Duomo, Duomo, Municipio 1, Milano, Lombardia, Italia',
 		feature: {
-			geometry: { coordinates: [9.2101497, 45.47164909999999], type: 'Point' },
+			geometry: { coordinates: [9.190666799999999, 45.46388775], type: 'Point' },
 			type: 'Feature'
 		},
-		id: 149178192,
-		readableAddress: 'Via Carlo Poerio',
+		id: 463529462,
+		readableAddress: 'Piazza del Duomo',
 		type: 'address'
 	};
 

@@ -27,6 +27,7 @@
 
 	$: {
 		if ($selectedAddress && $selectedAddress.type === 'address' && !$selectedAddress.value) {
+			console.log($selectedAddress);
 			const square = lookup.search(...$selectedAddress.feature.geometry.coordinates);
 			selectedAddress.update((d) => {
 				d.value = square.properties.NO2_stima;
@@ -77,8 +78,8 @@
 
 		map = new Map({
 			container: mapContainer,
-			style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-			//style: `https://api.maptiler.com/maps/streets/style.json?key=${MAPTILER_API_KEY}`,
+			//style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+			style: `https://api.maptiler.com/maps/toner/style.json?key=${MAPTILER_API_KEY}`,
 			bounds: $bboxGrid,
 			fitBoundsOptions: { padding: 20 },
 			maxZoom: 16,
@@ -109,47 +110,69 @@
 		map.addControl(new NavigationControl({ showCompass: false }), 'bottom-left');
 
 		map.on('load', function () {
+			const layers = map.getStyle().layers;
+			let labelLayerId = '';
+			for (let i = 0; i < layers.length; i++) {
+				if (
+					layers[i].type === 'symbol' &&
+					layers[i].layout['text-field'] &&
+					layers[i].id !== 'waterway_label'
+				) {
+					labelLayerId = layers[i].id;
+					break;
+				}
+			}
+
 			map.addSource('grid', {
 				type: 'geojson',
 				data: grid
 				// generateId: true
 			});
 
-			map.addLayer({
-				id: 'grid',
-				type: 'fill',
-				source: 'grid',
-				paint: {
-					'fill-color': ['get', 'color'],
-					//'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.75],
-					'fill-opacity': 0.75
-				}
-			});
+			map.addLayer(
+				{
+					id: 'grid',
+					type: 'fill',
+					source: 'grid',
+					paint: {
+						'fill-color': ['get', 'color'],
+						//'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.75],
+						'fill-opacity': 0.9
+					}
+				},
+				labelLayerId
+			);
 
-			map.addLayer({
-				id: 'gridLine',
-				type: 'line',
-				source: 'grid',
-				paint: {
-					'line-color': 'white',
-					'line-width': ['case', ['boolean', ['feature-state', 'hover'], false], 3, 0]
-				}
-			});
+			map.addLayer(
+				{
+					id: 'gridLine',
+					type: 'line',
+					source: 'grid',
+					paint: {
+						'line-color': 'white',
+						'line-width': ['case', ['boolean', ['feature-state', 'hover'], false], 3, 0]
+					}
+				},
+				labelLayerId
+			);
 
 			map.addSource('selectedGrid', {
 				type: 'geojson',
 				data: null
 			});
 
-			map.addLayer({
-				id: 'selectedGrid',
-				type: 'line',
-				source: 'selectedGrid',
-				paint: {
-					'line-color': 'white',
-					'line-width': 3
-				}
-			});
+			map.addLayer(
+				{
+					id: 'selectedGrid',
+					type: 'line',
+					source: 'selectedGrid',
+					paint: {
+						'line-color': 'white',
+						'line-width': 3
+					}
+				},
+				labelLayerId
+			);
 		});
 
 		map.on('mousemove', 'grid', function (e) {

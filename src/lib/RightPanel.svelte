@@ -8,6 +8,7 @@
 	import WhatsappButton from '$lib/WhatsappButton.svelte';
 	import TelegramButton from '$lib/TelegramButton.svelte';
 	import Sentence from '$lib/Sentence.svelte';
+	import { base } from '$app/paths';
 
 	export let togglePanel, panelOpen;
 	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
@@ -23,7 +24,7 @@
 	const via = 'citizensforair';
 
 	$: googleSatelliteUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&zoom=19&scale=2&size=458x165&maptype=satellite&key=${GOOGLE_API_KEY}&format=png`;
-	$: streetviewUrl = `https://maps.googleapis.com/maps/api/streetview?size=458x165&key=${GOOGLE_API_KEY}&location=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}`;
+	$: streetviewUrl = `https://maps.googleapis.com/maps/api/streetview?size=458x165&key=${GOOGLE_API_KEY}&location=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&source=outdoor`;
 	$: bgUrl = $selectedAddress?.type === 'address' ? streetviewUrl : googleSatelliteUrl;
 
 	const onScroll = (e) => {
@@ -107,7 +108,8 @@
 				role="button"
 				style="max-width: 200px;"
 				class="btn btn-light rounded-pill"
-				target="_blank"><img src="/logo.png" class="img-fluid" alt="logo cittadini per l'aria" /></a
+				target="_blank"
+				><img src={`${base}/logo.png`} class="img-fluid" alt="logo cittadini per l'aria" /></a
 			>
 		</div>
 	</Box>
