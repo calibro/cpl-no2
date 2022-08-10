@@ -2,8 +2,10 @@
 	import { colorScale, bboxGrid, selectedAddress, mediaQuery } from '$lib/stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
-	import { feature, bbox } from 'topojson-client';
+	import { feature, bbox, merge } from 'topojson-client';
 	import centroidTurf from '@turf/centroid';
+	import bufferTurf from '@turf/buffer';
+	import bboxTurf from '@turf/bbox';
 	import PolygonLookup from 'polygon-lookup';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	export let gridRawData;
@@ -18,6 +20,9 @@
 	$: padding = $md ? { right: 450 } : { bottom: 150, top: 75 };
 
 	const grid = feature(gridRawData, gridRawData.objects.test);
+	const boundary = merge(gridRawData, gridRawData.objects.test.geometries);
+	const buffer = bboxTurf(bufferTurf(boundary, 10));
+
 	bboxGrid.set(bbox(gridRawData));
 	grid.features.forEach((feature, i) => {
 		feature.id = i;
@@ -83,8 +88,8 @@
 			bounds: $bboxGrid,
 			fitBoundsOptions: { padding: 20 },
 			maxZoom: 16,
-			minZoom: 11
-			// maxBounds: bboxGrid to buffer it
+			minZoom: 11,
+			maxBounds: buffer
 		});
 
 		const geolocate = new GeolocateControl({

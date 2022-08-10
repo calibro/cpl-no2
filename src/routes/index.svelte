@@ -17,7 +17,7 @@
 	import { selectedAddress } from '$lib/stores';
 	import Map from '$lib/Map.svelte';
 	import RightPanel from '$lib/RightPanel.svelte';
-	import IntroPanel from '$lib/introPanel.svelte';
+	import IntroPanel from '$lib/IntroPanel.svelte';
 	import AddressSearch from '$lib/AddressSearch.svelte';
 	import { swipe } from 'svelte-gestures';
 	export let grid;
@@ -81,8 +81,8 @@
 {/if}
 
 <style>
-	.mapContainer {
-	}
+	/* .mapContainer {
+	} */
 
 	.rightPanelContainer {
 		top: 0;
