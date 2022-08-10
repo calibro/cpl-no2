@@ -32,7 +32,6 @@
 
 	$: {
 		if ($selectedAddress && $selectedAddress.type === 'address' && !$selectedAddress.value) {
-			console.log($selectedAddress);
 			const square = lookup.search(...$selectedAddress.feature.geometry.coordinates);
 			selectedAddress.update((d) => {
 				d.value = square.properties.NO2_stima;

@@ -97,7 +97,7 @@
 		</p>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">design e sviluppo</p>
 		<p class="mb-0">
-			<a class="text-white" href="https://calib.ro" target="_blank">Studio Clibro</a>
+			<a class="text-white" href="https://calib.ro" target="_blank">Studio Calibro</a>
 		</p>
 	</Box>
 	<Box>
