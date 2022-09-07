@@ -1,6 +1,6 @@
 import { writable, readable } from 'svelte/store';
 import { scaleSequential, scaleLinear } from 'd3-scale';
-import { interpolatePlasma, interpolateWarm } from 'd3-scale-chromatic';
+import { interpolateWarm } from 'd3-scale-chromatic';
 import { onDestroy } from 'svelte';
 
 export const bboxGrid = writable(null);

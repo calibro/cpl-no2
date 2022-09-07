@@ -5,8 +5,6 @@
 
 	$: searchMode = $selectedAddress.type;
 
-	$: console.log(searchMode);
-
 	const percentage0 = tweened(undefined);
 	const percentage1 = tweened(undefined);
 	const tValue = tweened(undefined);
@@ -33,9 +31,6 @@
 	$: deseaseKeys = Object.keys(deseases[searchMode]);
 
 	$: {
-		// rn = Math.floor(Math.random() * deseaseKeys.length);
-		// desease = deseaseKeys[rn];
-		console.log(deseases[searchMode][deseaseKeys[0]]);
 		percentage0.set(Math.floor(value / 10) * deseases[searchMode][deseaseKeys[0]]);
 		percentage1.set(Math.floor(value / 10) * deseases[searchMode][deseaseKeys[1]]);
 	}
