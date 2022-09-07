@@ -1,5 +1,5 @@
 import { writable, readable } from 'svelte/store';
-import { scaleSequential } from 'd3-scale';
+import { scaleSequential, scaleLinear } from 'd3-scale';
 import { interpolatePlasma, interpolateWarm } from 'd3-scale-chromatic';
 import { onDestroy } from 'svelte';
 
@@ -7,8 +7,15 @@ export const bboxGrid = writable(null);
 export const selectedAddress = writable(null);
 
 const colorDomain = [0, 60];
+const reScale = scaleLinear().domain([0.16, 1.0]).range([0.0, 1.0]);
 export const colorScale = readable(
-	scaleSequential((t) => interpolateWarm(1 - t))
+	scaleSequential((t) => {
+		if (t < 0.16) {
+			return interpolateWarm(1);
+		} else {
+			return interpolateWarm(1 - reScale(t));
+		}
+	})
 		.domain(colorDomain)
 		.clamp(true)
 );

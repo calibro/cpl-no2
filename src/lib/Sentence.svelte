@@ -7,6 +7,7 @@
 
 	const deseases = {
 		'di mortalità': 4,
+		'di infarto': 3,
 		'di asma nei bambini e giovani (0-18 anni)': 12,
 		'di infezioni respiratorie acute nei bambini e giovani': 9,
 		'di incidenza di asma negli adulti': 10

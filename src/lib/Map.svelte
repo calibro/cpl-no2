@@ -40,7 +40,7 @@
 			if (map) {
 				map.easeTo({
 					center: $selectedAddress.feature.geometry.coordinates,
-					zoom: 17,
+					zoom: 14,
 					padding: padding
 				});
 
@@ -58,7 +58,7 @@
 
 				map.flyTo({
 					center: $selectedAddress.feature.geometry.coordinates,
-					zoom: 17,
+					zoom: 14,
 					padding: padding
 				});
 			}

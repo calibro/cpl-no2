@@ -92,7 +92,8 @@
 			<a
 				class="text-white"
 				href="https://www.cittadiniperlaria.org/comitato-scientifico-del-progetto-no2-no-grazie/"
-				target="_blank">Comitato scientifico del progetto NO2 NO Grazie!</a
+				target="_blank"
+				>Elaborazione dati 2/2020: Comitato scientifico del progetto "NO<sub>2</sub> NO Grazie!"</a
 			>
 		</p>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">design e sviluppo</p>
