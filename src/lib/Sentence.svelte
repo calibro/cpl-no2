@@ -1,38 +1,53 @@
 <script>
+	import { selectedAddress } from '$lib/stores';
 	import { tweened } from 'svelte/motion';
 	export let value;
 
-	const percentage = tweened(undefined);
+	$: searchMode = $selectedAddress.type;
+
+	$: console.log(searchMode);
+
+	const percentage0 = tweened(undefined);
+	const percentage1 = tweened(undefined);
 	const tValue = tweened(undefined);
 
-	const deseases = {
-		'di mortalità': 4,
-		'di infarto': 3,
-		'di asma nei bambini e giovani (0-18 anni)': 12,
-		'di infezioni respiratorie acute nei bambini e giovani': 9,
-		'di incidenza di asma negli adulti': 10
+	$: percentages = {
+		percentage0: $percentage0,
+		percentage1: $percentage1
 	};
 
-	const deseaseKeys = Object.keys(deseases);
-	let rn = Math.floor(Math.random() * deseaseKeys.length);
-	let desease = deseaseKeys[rn];
+	const deseases = {
+		address: {
+			'di mortalità': 4,
+			'di infarto': 3
+		},
+		grid: { 'di mortalità': 4, 'di infarto': 3 },
+		school: {
+			'di asma nei bambini e giovani': 12,
+			'di infezioni respiratorie acute': 9
+		}
+
+		// 'di incidenza di asma negli adulti': 10
+	};
+
+	$: deseaseKeys = Object.keys(deseases[searchMode]);
 
 	$: {
 		// rn = Math.floor(Math.random() * deseaseKeys.length);
 		// desease = deseaseKeys[rn];
-		percentage.set(Math.floor(value / 10) * deseases[desease]);
+		console.log(deseases[searchMode][deseaseKeys[0]]);
+		percentage0.set(Math.floor(value / 10) * deseases[searchMode][deseaseKeys[0]]);
+		percentage1.set(Math.floor(value / 10) * deseases[searchMode][deseaseKeys[1]]);
 	}
 
 	$: tValue.set(value);
 </script>
 
 <p class="fs-5 mb-0">
-	L'esposizione a <b>{Math.round($tValue)} µg/m3</b> di N0<sub>2</sub> comporta un aumento del
-	rischio {desease}
-	del <b>{Math.round($percentage)}%</b>.
+	L'esposizione a <b>{Math.round($tValue)} µg/m3</b> di NO<sub>2</sub> comporta un aumento del
+	rischio {#each deseaseKeys as desease, i}
+		{desease}
+		del <b>{Math.round(percentages['percentage' + i])}%</b>
+		{#if i === 0} {'e '} {:else}.{/if}
+	{/each}
 </p>
-
-<!-- <p class="fs-5 mb-0">
-	Esistono inoltre prove inconfutabili che indicano la comparsa di sintomi respiratori quali
-	irritazione, tosse, respirazione superficiale e difficoltà respiratorie.
-</p> -->

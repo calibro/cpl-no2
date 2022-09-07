@@ -3,6 +3,7 @@
 	import { selectedAddress } from '$lib/stores';
 	import Box from '$lib/Box.svelte';
 	import { base } from '$app/paths';
+	export let schools;
 
 	const defaultAddress = {
 		address: 'Piazza del Duomo, Duomo, Municipio 1, Milano, Lombardia, Italia',
@@ -45,7 +46,7 @@
 			</p>
 		</Box>
 		<Box>
-			<AddressSearch id="intro_address" />
+			<AddressSearch id="intro_address" {schools} />
 			<button on:click={selectDefaultAddress} class="btn btn-light rounded-pill mt-3 w-100">
 				...o esplora la mappa
 			</button>

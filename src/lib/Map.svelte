@@ -31,7 +31,11 @@
 	const lookup = new PolygonLookup(grid);
 
 	$: {
-		if ($selectedAddress && $selectedAddress.type === 'address' && !$selectedAddress.value) {
+		if (
+			$selectedAddress &&
+			($selectedAddress.type === 'address' || $selectedAddress.type === 'school') &&
+			!$selectedAddress.value
+		) {
 			const square = lookup.search(...$selectedAddress.feature.geometry.coordinates);
 			selectedAddress.update((d) => {
 				d.value = square.properties.NO2_stima;

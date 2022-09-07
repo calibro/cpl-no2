@@ -3,10 +3,14 @@
 		const url = `/grid.json`;
 		const response = await fetch(url);
 
+		const url2 = `/all_schools.json`;
+		const response2 = await fetch(url2);
+
 		return {
 			status: response.status,
 			props: {
-				grid: response.ok && (await response.json())
+				grid: response.ok && (await response.json()),
+				schools: response2.ok && (await response2.json())
 			}
 		};
 	}
@@ -20,7 +24,7 @@
 	import IntroPanel from '$lib/IntroPanel.svelte';
 	import AddressSearch from '$lib/AddressSearch.svelte';
 	import { swipe } from 'svelte-gestures';
-	export let grid;
+	export let grid, schools;
 
 	let showInfoPanel = true;
 	let showInfoFirst = true;
@@ -51,7 +55,7 @@
 </script>
 
 <div class="mapContainer position-absolute w-100 h-100">
-	<Map gridRawData={grid} />
+	<Map gridRawData={grid} {schools} />
 </div>
 
 {#if $selectedAddress}
@@ -69,14 +73,14 @@
 {#if !showInfoFirst}
 	<div transition:fade class="adderssSearchContainer position-absolute">
 		<div class="rounded-md bg-indigo p-2 p-md-3">
-			<AddressSearch id="map_address" />
+			<AddressSearch id="map_address" {schools} />
 		</div>
 	</div>
 {/if}
 
 {#if showInfoPanel && showInfoFirst}
 	<div transition:fade class="introPanelContainer position-absolute w-100">
-		<IntroPanel />
+		<IntroPanel {schools} />
 	</div>
 {/if}
 

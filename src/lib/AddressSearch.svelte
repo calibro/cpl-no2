@@ -1,9 +1,25 @@
 <script>
-	import { bboxGrid, selectedAddress } from '$lib/stores';
+	import { bboxGrid, selectedAddress, searchMode } from '$lib/stores';
 	import AutoComplete from 'simple-svelte-autocomplete';
-	export let id;
+	// import { feature } from 'topojson-client';
+	export let id, schools;
+	let schoolItems = [];
 	let selectedFeature;
 	let showClear;
+
+	$: {
+		if (schools) {
+			schoolItems = schools?.features.map((d) => {
+				return {
+					type: 'school',
+					feature: d,
+					address: d.properties.NOME,
+					readableAddress: d.properties.NOME,
+					id: d.properties.NOME
+				};
+			});
+		}
+	}
 
 	async function forwardGeocode(keyword) {
 		if (keyword.length > 1) {
@@ -51,27 +67,75 @@
 			selectedAddress.set(selectedFeature);
 		}
 	}
+
+	function changeSearchMode(mode) {
+		searchMode.set(mode);
+	}
 </script>
 
 <div class="w-100 autocompleteContainer">
-	<AutoComplete
-		inputId={id}
-		searchFunction={forwardGeocode}
-		delay="200"
-		localFiltering={false}
-		showLoadingIndicator={true}
-		labelFieldName="address"
-		valueFieldName="id"
-		bind:selectedItem={selectedFeature}
-		className="w-100"
-		inputClassName="form-control form-control-lg"
-		placeholder="inserisci un indirizzo..."
-		noResultsText="nessun indirizzo trovato"
-		maxItemsToShowInList={5}
-		hideArrow={true}
-		{showClear}
-		disabled={!$bboxGrid.length}
-	/>
+	<div class="d-flex fs-7 fw-bold mb-2">
+		<div
+			class="pointer"
+			class:text-white-50={$searchMode !== 'address'}
+			class:text-decoration-underline={$searchMode === 'address'}
+			on:click={() => changeSearchMode('address')}
+		>
+			Indirizzo
+		</div>
+		<div
+			class:text-white-50={$searchMode !== 'school'}
+			class:text-decoration-underline={$searchMode === 'school'}
+			on:click={() => changeSearchMode('school')}
+			class="ms-2 pointer"
+		>
+			Scuole
+		</div>
+	</div>
+	{#if $searchMode === 'address'}
+		<AutoComplete
+			inputId={id}
+			searchFunction={forwardGeocode}
+			delay="200"
+			localFiltering={false}
+			showLoadingIndicator={true}
+			labelFieldName="address"
+			valueFieldName="id"
+			bind:selectedItem={selectedFeature}
+			className="w-100"
+			inputClassName="form-control form-control-lg"
+			placeholder="inserisci un indirizzo..."
+			noResultsText="nessun indirizzo trovato"
+			maxItemsToShowInList={5}
+			hideArrow={true}
+			{showClear}
+			disabled={!$bboxGrid.length}
+		/>
+	{:else}
+		<AutoComplete
+			items={schoolItems}
+			inputId={id}
+			labelFieldName="address"
+			valueFieldName="id"
+			keywordsFunction={(d) => d.address + ' ' + d.feature.properties.INDIRIZZO}
+			bind:selectedItem={selectedFeature}
+			className="w-100"
+			inputClassName="form-control form-control-lg"
+			placeholder="inserisci una scuola..."
+			noResultsText="nessuna scuola trovata"
+			maxItemsToShowInList={5}
+			hideArrow={true}
+			{showClear}
+			disabled={!$bboxGrid.length}
+		>
+			<div slot="item" let:item let:label>
+				{@html label}
+				<div class="fs-7 mt-1">
+					{item.feature.properties.GRADO} - {item.feature.properties.INDIRIZZO}
+				</div>
+			</div>
+		</AutoComplete>
+	{/if}
 </div>
 
 <style>
