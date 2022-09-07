@@ -15,7 +15,7 @@
 		type: 'address'
 	};
 
-	const seelctDefaultAddress = () => {
+	const selectDefaultAddress = () => {
 		selectedAddress.set(defaultAddress);
 	};
 </script>
@@ -25,22 +25,28 @@
 >
 	<div class="infoContainer bg-indigo rounded-md p-3 d-flex flex-column">
 		<Box>
-			<h6 class="mb-3 text-uppercase">NO<sub>2</sub>, No grazie!</h6>
+			<h6 class="mb-3 text-uppercase">Sai cosa respiri?</h6>
 
-			<p class="question fs-3 lh-sm">Quanto biossido di azoto respiri a Milano?</p>
+			<p class="question fs-3 lh-sm">
+				Scopri quanto NO<sub class="questionNumber">2</sub> respiri a Milano!
+			</p>
 
 			<p>
 				Il biossido di azoto (NO<sub>2</sub>) che proviene dai veicoli diesel che percorrono le vie
-				di Milano causa la morte prematura di <b>1507</b> persone ogni anno nel capoluogo lombardo.
+				di Milano causa la morte prematura di <b>1500</b> persone ogni anno nel capoluogo lombardo.
 			</p>
-			<p class="mb-0">
-				Scopri la concentrazione annua di NO<sub>2</sub> inserende un indirizzo a Milano (dove abiti
-				per esempio) o selezionando una scuola.
+			<p>
+				Scopri la concentrazione annua di NO<sub>2</sub> inserendo il tuo indirizzo a Milano, quello
+				di dove lavori, o selezionando una scuola.
+			</p>
+			<p class="mb-0 fs-7 text-decoration-underline">
+				Forniamo al pubblico la stima più dettagliata sulle concentrazioni di inquinamento da
+				traffico a Milano
 			</p>
 		</Box>
 		<Box>
 			<AddressSearch id="intro_address" />
-			<button on:click={seelctDefaultAddress} class="btn btn-light rounded-pill mt-3 w-100">
+			<button on:click={selectDefaultAddress} class="btn btn-light rounded-pill mt-3 w-100">
 				...o esplora la mappa
 			</button>
 		</Box>
@@ -75,9 +81,16 @@
 		/* text-fill-color: transparent; */
 	}
 
+	.questionNumber {
+		background: linear-gradient(267.15deg, #f6e349 0%, #f1a24d 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
 	@media (min-width: 768px) {
 		.infoContainer {
-			width: 350px;
+			width: 400px;
 			height: auto;
 			max-height: 100%;
 		}
