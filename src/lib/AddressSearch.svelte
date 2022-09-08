@@ -3,23 +3,18 @@
 	import AutoComplete from 'simple-svelte-autocomplete';
 	// import { feature } from 'topojson-client';
 	export let id, schools;
-	let schoolItems = [];
 	let selectedFeature;
 	let showClear;
 
-	$: {
-		if (schools) {
-			schoolItems = schools?.features.map((d) => {
-				return {
-					type: 'school',
-					feature: d,
-					address: d.properties.NOME,
-					readableAddress: d.properties.NOME,
-					id: d.properties.NOME
-				};
-			});
-		}
-	}
+	const schoolItems = schools?.features.map((d) => {
+		return {
+			type: 'school',
+			feature: d,
+			address: d.properties.NOME,
+			readableAddress: d.properties.NOME,
+			id: d.properties.NOME
+		};
+	});
 
 	async function forwardGeocode(keyword) {
 		if (keyword.length > 1) {
@@ -69,6 +64,7 @@
 	}
 
 	function changeSearchMode(mode) {
+		selectedFeature = null;
 		searchMode.set(mode);
 	}
 </script>
@@ -125,7 +121,7 @@
 			noResultsText="nessuna scuola trovata"
 			maxItemsToShowInList={5}
 			hideArrow={true}
-			{showClear}
+			showClear={false}
 			disabled={!$bboxGrid.length}
 		>
 			<div slot="item" let:item let:label>

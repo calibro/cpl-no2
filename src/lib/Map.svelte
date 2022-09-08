@@ -8,8 +8,17 @@
 	import bboxTurf from '@turf/bbox';
 	import PolygonLookup from 'polygon-lookup';
 	import 'maplibre-gl/dist/maplibre-gl.css';
-	export let gridRawData;
+	import schoolIcon from '$lib/icons/school.png';
+	import homeIcon from '$lib/icons/home.png';
+	import markerIcon from '$lib/icons/marker.png';
+	export let gridRawData, schools;
 	const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
+
+	const icons = [
+		{ url: schoolIcon, id: 'school' },
+		{ url: homeIcon, id: 'home' },
+		{ url: markerIcon, id: 'marker' }
+	];
 
 	let map;
 	let mapContainer;
@@ -33,8 +42,7 @@
 	$: {
 		if (
 			$selectedAddress &&
-			($selectedAddress.type === 'address' || $selectedAddress.type === 'school') &&
-			!$selectedAddress.value
+			($selectedAddress.type === 'address' || $selectedAddress.type === 'school')
 		) {
 			const square = lookup.search(...$selectedAddress.feature.geometry.coordinates);
 			selectedAddress.update((d) => {
@@ -44,10 +52,10 @@
 			if (map) {
 				map.easeTo({
 					center: $selectedAddress.feature.geometry.coordinates,
-					zoom: 14,
+					zoom: map.getZoom() > 13 ? map.getZoom() : 13,
 					padding: padding
 				});
-
+				square.properties.icon = $selectedAddress.type === 'address' ? 'home' : 'school';
 				map.getSource('selectedGrid').setData({
 					type: 'FeatureCollection',
 					features: [square]
@@ -55,6 +63,10 @@
 			}
 		} else if ($selectedAddress && $selectedAddress.type === 'grid') {
 			if (map?.getSource('selectedGrid')) {
+				selectedAddress.update((d) => {
+					d.square.properties.icon = 'marker';
+					return d;
+				});
 				map.getSource('selectedGrid').setData({
 					type: 'FeatureCollection',
 					features: [$selectedAddress.square]
@@ -62,7 +74,7 @@
 
 				map.flyTo({
 					center: $selectedAddress.feature.geometry.coordinates,
-					zoom: 14,
+					zoom: map.getZoom() > 13 ? map.getZoom() : 13,
 					padding: padding
 				});
 			}
@@ -118,6 +130,24 @@
 		map.addControl(new NavigationControl({ showCompass: false }), 'bottom-left');
 
 		map.on('load', function () {
+			//add custom icons
+			// map.loadImage(schoolIcon, function (error, image) {
+			// 	if (error) throw error;
+			// 	map.addImage('school', image, { sdf: true });
+			// });
+
+			// map.loadImage(homeIcon, function (error, image) {
+			// 	if (error) throw error;
+			// 	map.addImage('home', image, { sdf: true });
+			// });
+
+			icons.forEach((img) => {
+				map.loadImage(img.url, function (error, res) {
+					if (error) throw error;
+					map.addImage(img.id, res, { sdf: true });
+				});
+			});
+
 			const layers = map.getStyle().layers;
 			let labelLayerId = '';
 			for (let i = 0; i < layers.length; i++) {
@@ -137,6 +167,12 @@
 				// generateId: true
 			});
 
+			map.addSource('schools', {
+				type: 'geojson',
+				data: schools
+				// generateId: true
+			});
+
 			map.addLayer(
 				{
 					id: 'grid',
@@ -146,6 +182,23 @@
 						'fill-color': ['get', 'color'],
 						//'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.75],
 						'fill-opacity': 0.9
+					}
+				},
+				labelLayerId
+			);
+
+			map.addLayer(
+				{
+					id: 'schools',
+					type: 'circle',
+					source: 'schools',
+					paint: {
+						'circle-color': 'black',
+						//'circle-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.75],
+						'circle-opacity': 0.5
+					},
+					layout: {
+						visibility: 'none'
 					}
 				},
 				labelLayerId
@@ -174,6 +227,7 @@
 					id: 'selectedGrid',
 					type: 'line',
 					source: 'selectedGrid',
+					minzoom: 15,
 					paint: {
 						'line-color': 'white',
 						'line-width': 3
@@ -181,6 +235,21 @@
 				},
 				labelLayerId
 			);
+
+			map.addLayer({
+				id: 'selectedIcon',
+				type: 'symbol',
+				source: 'selectedGrid',
+				layout: {
+					'icon-image': '{icon}'
+				},
+				paint: {
+					// 'icon-color': 'white',
+					// 'icon-halo-color': 'rgba(255,255,255,0.5)',
+					// 'icon-halo-width': 7,
+					// 'icon-halo-blur': 1
+				}
+			});
 		});
 
 		map.on('mousemove', 'grid', function (e) {
