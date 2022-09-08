@@ -102,7 +102,7 @@
 			inputClassName="form-control form-control-lg"
 			placeholder="inserisci un indirizzo..."
 			noResultsText="nessun indirizzo trovato"
-			maxItemsToShowInList={5}
+			maxItemsToShowInList={'5'}
 			hideArrow={true}
 			{showClear}
 			disabled={!$bboxGrid.length}
@@ -119,6 +119,7 @@
 			inputClassName="form-control form-control-lg"
 			placeholder="inserisci una scuola..."
 			noResultsText="nessuna scuola trovata"
+			moreItemsText="scuole non mostrate"
 			maxItemsToShowInList={5}
 			hideArrow={true}
 			showClear={false}
