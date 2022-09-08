@@ -8,7 +8,7 @@
 	const defaultAddress = {
 		address: 'Piazza del Duomo, Duomo, Municipio 1, Milano, Lombardia, Italia',
 		feature: {
-			geometry: { coordinates: [9.18953, 45.46412], type: 'Point' },
+			geometry: { coordinates: [9.189292, 45.464693], type: 'Point' },
 			type: 'Feature'
 		},
 		id: 463529462,

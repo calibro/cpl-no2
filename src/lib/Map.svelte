@@ -1,7 +1,7 @@
 <script>
 	import { colorScale, bboxGrid, selectedAddress, mediaQuery, gridBoundary } from '$lib/stores';
 	import { onMount, onDestroy } from 'svelte';
-	import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
+	import { Map, NavigationControl, GeolocateControl, Marker } from 'maplibre-gl';
 	import { feature, bbox, merge } from 'topojson-client';
 	import centroidTurf from '@turf/centroid';
 	import bufferTurf from '@turf/buffer';
@@ -23,6 +23,8 @@
 	let map;
 	let mapContainer;
 	let hoveredStateId;
+	let marker;
+	let markerEl;
 
 	const md = mediaQuery('(min-width: 768px)');
 
@@ -41,6 +43,12 @@
 	const lookup = new PolygonLookup(grid);
 
 	$: {
+		if (map && markerEl) {
+			marker = new Marker({ element: markerEl, anchor: 'bottom' }).setLngLat([0, 0]).addTo(map);
+		}
+	}
+
+	$: {
 		if (
 			$selectedAddress &&
 			($selectedAddress.type === 'address' || $selectedAddress.type === 'school')
@@ -56,22 +64,28 @@
 					zoom: map.getZoom() > 13 ? map.getZoom() : 13,
 					padding: padding
 				});
-				square.properties.icon = $selectedAddress.type === 'address' ? 'home' : 'school';
+				//square.properties.icon = $selectedAddress.type === 'address' ? 'home' : 'school';
 				map.getSource('selectedGrid').setData({
 					type: 'FeatureCollection',
 					features: [square]
 				});
+
+				const squareCentroid = centroidTurf(square);
+				marker.setLngLat(squareCentroid.geometry.coordinates);
 			}
 		} else if ($selectedAddress && $selectedAddress.type === 'grid') {
 			if (map?.getSource('selectedGrid')) {
-				selectedAddress.update((d) => {
-					d.square.properties.icon = 'marker';
-					return d;
-				});
+				// selectedAddress.update((d) => {
+				// 	d.square.properties.icon = 'marker';
+				// 	return d;
+				// });
 				map.getSource('selectedGrid').setData({
 					type: 'FeatureCollection',
 					features: [$selectedAddress.square]
 				});
+
+				const squareCentroid = centroidTurf($selectedAddress.square);
+				marker.setLngLat(squareCentroid.geometry.coordinates);
 
 				map.flyTo({
 					center: $selectedAddress.feature.geometry.coordinates,
@@ -90,13 +104,6 @@
 	}
 
 	onMount(() => {
-		//   const { env } = _process;
-		//   const apiKey = env.API_KEY;
-
-		//   if (!apiKey) {
-		//     throw new Error("You need to configure env API_KEY first, see README");
-		//   }
-
 		map = new Map({
 			container: mapContainer,
 			//style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
@@ -131,24 +138,6 @@
 		map.addControl(new NavigationControl({ showCompass: false }), 'bottom-left');
 
 		map.on('load', function () {
-			//add custom icons
-			// map.loadImage(schoolIcon, function (error, image) {
-			// 	if (error) throw error;
-			// 	map.addImage('school', image, { sdf: true });
-			// });
-
-			// map.loadImage(homeIcon, function (error, image) {
-			// 	if (error) throw error;
-			// 	map.addImage('home', image, { sdf: true });
-			// });
-
-			icons.forEach((img) => {
-				map.loadImage(img.url, function (error, res) {
-					if (error) throw error;
-					map.addImage(img.id, res, { sdf: true });
-				});
-			});
-
 			const layers = map.getStyle().layers;
 			let labelLayerId = '';
 			for (let i = 0; i < layers.length; i++) {
@@ -236,21 +225,6 @@
 				},
 				labelLayerId
 			);
-
-			map.addLayer({
-				id: 'selectedIcon',
-				type: 'symbol',
-				source: 'selectedGrid',
-				layout: {
-					'icon-image': '{icon}'
-				},
-				paint: {
-					// 'icon-color': 'white',
-					// 'icon-halo-color': 'rgba(255,255,255,0.5)',
-					// 'icon-halo-width': 7,
-					// 'icon-halo-blur': 1
-				}
-			});
 		});
 
 		map.on('mousemove', 'grid', function (e) {
@@ -291,12 +265,44 @@
 </script>
 
 <div class="map" id="map" bind:this={mapContainer} />
+<div id="markerContainer" class="d-flex flex-column justify-content-center" bind:this={markerEl}>
+	<div
+		class="bg-white w-100 flex-grow-1 flex-shrink-1 rounded d-flex align-items-center justify-content-center fs-1"
+		style="color:{$colorScale($selectedAddress?.value)}"
+	>
+		{#if $selectedAddress?.type === 'address'}
+			<i class="bi bi-house-door-fill" />
+		{:else if $selectedAddress?.type === 'school'}
+			<i class="bi bi-pencil-fill" />
+		{:else}
+			<i class="bi bi-square" />
+		{/if}
+	</div>
+	<div class="text-white flex-grow-0 flex-shrink-0 d-flex justify-content-center">
+		<span class="arrow-down" />
+	</div>
+</div>
 
 <style>
 	.map {
 		position: absolute;
 		width: 100%;
 		height: 100%;
+	}
+
+	#markerContainer {
+		width: 50px;
+		height: 58px;
+	}
+
+	.arrow-down {
+		width: 0;
+		height: 0;
+		display: inline-block;
+		vertical-align: middle;
+		border-style: solid;
+		border-width: 8px 8px 0 8px;
+		border-color: white transparent transparent transparent;
 	}
 
 	.map :global(.mapboxgl-user-location-accuracy-circle),
