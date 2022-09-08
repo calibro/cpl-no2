@@ -14,12 +14,12 @@
 	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 	// const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
-	$: text = `A #Milano in ${
+	$: text = `A #Milano, ${
 		$selectedAddress?.readableAddress
 	}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di #NO2. ${Math.round(
 		Math.floor($selectedAddress?.value) / 10
 	)} volte oltre il limite a tutela della salute 😷. Scopri quanta NO2 respiri sulla mappa di Cittadini per l'aria!`;
-	$: textTwitter = `A #Milano in ${
+	$: textTwitter = `A #Milano, ${
 		$selectedAddress?.readableAddress
 	}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di #NO2. ${Math.round(
 		Math.floor($selectedAddress?.value) / 10
