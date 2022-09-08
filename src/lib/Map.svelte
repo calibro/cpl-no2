@@ -1,5 +1,5 @@
 <script>
-	import { colorScale, bboxGrid, selectedAddress, mediaQuery } from '$lib/stores';
+	import { colorScale, bboxGrid, selectedAddress, mediaQuery, gridBoundary } from '$lib/stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { Map, NavigationControl, GeolocateControl } from 'maplibre-gl';
 	import { feature, bbox, merge } from 'topojson-client';
@@ -33,6 +33,7 @@
 	const buffer = bboxTurf(bufferTurf(boundary, 10));
 
 	bboxGrid.set(bbox(gridRawData));
+	gridBoundary.set(boundary);
 	grid.features.forEach((feature, i) => {
 		feature.id = i;
 		feature.properties.color = $colorScale(feature.properties.NO2_stima);

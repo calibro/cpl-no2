@@ -25,7 +25,10 @@
 
 	$: googleSatelliteUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&zoom=19&scale=2&size=458x165&maptype=satellite&key=${GOOGLE_API_KEY}&format=png`;
 	$: streetviewUrl = `https://maps.googleapis.com/maps/api/streetview?size=458x165&key=${GOOGLE_API_KEY}&location=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&source=outdoor`;
-	$: bgUrl = $selectedAddress?.type === 'address' ? streetviewUrl : googleSatelliteUrl;
+	$: bgUrl =
+		$selectedAddress?.type === 'address' || $selectedAddress?.type === 'school'
+			? streetviewUrl
+			: googleSatelliteUrl;
 
 	const onScroll = (e) => {
 		if (e.target.scrollTop === 0) {
@@ -75,7 +78,7 @@
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">agisci</p>
 		<div class="d-grid mt-1 mb-2">
 			<a href="https://google.com" class="btn btn-light rounded-pill" role="button"
-				>Partecipa all'appello!</a
+				>Sottoscrivi l'appello!</a
 			>
 		</div>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">condividi</p>

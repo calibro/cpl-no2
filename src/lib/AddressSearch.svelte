@@ -1,6 +1,7 @@
 <script>
-	import { bboxGrid, selectedAddress, searchMode } from '$lib/stores';
+	import { bboxGrid, selectedAddress, searchMode, gridBoundary } from '$lib/stores';
 	import AutoComplete from 'simple-svelte-autocomplete';
+	import pip from '@turf/boolean-point-in-polygon';
 	// import { feature } from 'topojson-client';
 	export let id, schools;
 	let selectedFeature;
@@ -22,20 +23,25 @@
 		} else {
 			showClear = false;
 		}
+		const geocoder = new google.maps.Geocoder();
+		let googleResults;
+		try {
+			const responseGoogle = await geocoder.geocode({
+				address: `${keyword}, Milano`,
+				componentRestrictions: {
+					country: 'IT'
+				}
+			});
+			googleResults = responseGoogle.results;
+		} catch (error) {
+			googleResults = [];
+		}
+
 		const features = [];
-		let request = `https://nominatim.openstreetmap.org/search?q="${keyword}"&format=geojson&polygon_geojson=1&addressdetails=1&countrycodes=it&bounded=1&viewbox=${$bboxGrid.join()}&accept-language=it`;
-		const response = await fetch(request);
-		const geojson = await response.json();
-		for (let feature of geojson.features) {
-			let center = [
-				feature.bbox[0] + (feature.bbox[2] - feature.bbox[0]) / 2,
-				feature.bbox[1] + (feature.bbox[3] - feature.bbox[1]) / 2
-			];
-			const readableAddress = `${feature.properties.address.road}${
-				feature.properties.address.house_number
-					? ', ' + feature.properties.address.house_number
-					: ''
-			}`;
+
+		for (let feature of googleResults) {
+			let center = [feature.geometry.location.lng(), feature.geometry.location.lat()];
+			const readableAddress = feature.formatted_address;
 
 			let point = {
 				type: 'address',
@@ -45,14 +51,17 @@
 						type: 'Point',
 						coordinates: center
 					},
-					properties: feature.properties
+					properties: { readableAddress }
 				},
 
-				address: feature.properties.display_name,
-				readableAddress: readableAddress,
-				id: feature.properties.place_id
+				address: readableAddress,
+				readableAddress,
+				id: feature.place_id
 			};
-			features.push(point);
+
+			if (pip(point.feature, $gridBoundary)) {
+				features.push(point);
+			}
 		}
 		return features;
 	}
@@ -88,50 +97,52 @@
 			Scuole
 		</div>
 	</div>
-	{#if $searchMode === 'address'}
-		<AutoComplete
-			inputId={id}
-			searchFunction={forwardGeocode}
-			delay="200"
-			localFiltering={false}
-			showLoadingIndicator={true}
-			labelFieldName="address"
-			valueFieldName="id"
-			bind:selectedItem={selectedFeature}
-			className="w-100"
-			inputClassName="form-control form-control-lg"
-			placeholder="inserisci un indirizzo..."
-			noResultsText="nessun indirizzo trovato"
-			maxItemsToShowInList={'5'}
-			hideArrow={true}
-			{showClear}
-			disabled={!$bboxGrid.length}
-		/>
-	{:else}
-		<AutoComplete
-			items={schoolItems}
-			inputId={id}
-			labelFieldName="address"
-			valueFieldName="id"
-			keywordsFunction={(d) => d.address + ' ' + d.feature.properties.INDIRIZZO}
-			bind:selectedItem={selectedFeature}
-			className="w-100"
-			inputClassName="form-control form-control-lg"
-			placeholder="inserisci una scuola..."
-			noResultsText="nessuna scuola trovata"
-			moreItemsText="scuole non mostrate"
-			maxItemsToShowInList={5}
-			hideArrow={true}
-			showClear={false}
-			disabled={!$bboxGrid.length}
-		>
-			<div slot="item" let:item let:label>
-				{@html label}
-				<div class="fs-7 mt-1">
-					{item.feature.properties.GRADO} - {item.feature.properties.INDIRIZZO}
+	{#if true}
+		{#if $searchMode === 'address'}
+			<AutoComplete
+				inputId={id}
+				searchFunction={forwardGeocode}
+				delay="200"
+				localFiltering={false}
+				showLoadingIndicator={true}
+				labelFieldName="address"
+				valueFieldName="id"
+				bind:selectedItem={selectedFeature}
+				className="w-100"
+				inputClassName="form-control form-control-lg"
+				placeholder="inserisci un indirizzo..."
+				noResultsText="nessun indirizzo trovato"
+				maxItemsToShowInList={'5'}
+				hideArrow={true}
+				{showClear}
+				disabled={!$gridBoundary}
+			/>
+		{:else}
+			<AutoComplete
+				items={schoolItems}
+				inputId={id}
+				labelFieldName="address"
+				valueFieldName="id"
+				keywordsFunction={(d) => d.address + ' ' + d.feature.properties.INDIRIZZO}
+				bind:selectedItem={selectedFeature}
+				className="w-100"
+				inputClassName="form-control form-control-lg"
+				placeholder="inserisci una scuola..."
+				noResultsText="nessuna scuola trovata"
+				moreItemsText="scuole non mostrate"
+				maxItemsToShowInList={5}
+				hideArrow={true}
+				showClear={false}
+				disabled={!$bboxGrid.length}
+			>
+				<div slot="item" let:item let:label>
+					{@html label}
+					<div class="fs-7 mt-1">
+						{item.feature.properties.GRADO} - {item.feature.properties.INDIRIZZO}
+					</div>
 				</div>
-			</div>
-		</AutoComplete>
+			</AutoComplete>
+		{/if}
 	{/if}
 </div>
 

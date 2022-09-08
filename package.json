@@ -2,7 +2,7 @@
 	"name": "cpl-no2",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "export NODE_ENV=development && vite dev",
+		"dev": "export NODE_ENV=development && vite dev --host",
 		"build": "vite build",
 		"package": "svelte-kit package",
 		"preview": "vite preview --host",
@@ -26,6 +26,7 @@
 	"type": "module",
 	"dependencies": {
 		"@turf/bbox": "^6.5.0",
+		"@turf/boolean-point-in-polygon": "^6.5.0",
 		"@turf/buffer": "^6.5.0",
 		"@turf/centroid": "^6.5.0",
 		"bootstrap": "^5.2.0",

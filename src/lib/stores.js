@@ -4,8 +4,10 @@ import { interpolateWarm } from 'd3-scale-chromatic';
 import { onDestroy } from 'svelte';
 
 export const bboxGrid = writable(null);
+export const gridBoundary = writable(null);
 export const selectedAddress = writable(null);
 export const searchMode = writable('address');
+export const googleGeocoder = writable(false);
 
 const colorDomain = [0, 60];
 const reScale = scaleLinear().domain([0.16, 1.0]).range([0.0, 1.0]);
