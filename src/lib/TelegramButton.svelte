@@ -2,7 +2,11 @@
 	export let text;
 	export let url;
 
-	$: href = encodeURI(`https://t.me/share/url?url=${url}&text=${text}`);
+	$: query = [text && `text=${encodeURIComponent(text)}`, url && `url=${encodeURIComponent(url)}`]
+		.filter(Boolean)
+		.join('&');
+
+	$: href = `https://t.me/share/url?${query}`;
 </script>
 
 <a

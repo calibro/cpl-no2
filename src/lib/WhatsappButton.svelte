@@ -1,7 +1,9 @@
 <script>
 	export let text;
 
-	$: href = encodeURI(`https://wa.me/?text=${text}`);
+	$: query = [text && `text=${encodeURIComponent(text)}`].filter(Boolean).join('&');
+
+	$: href = `https://wa.me/?text?${query}`;
 </script>
 
 <a

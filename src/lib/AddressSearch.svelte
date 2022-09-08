@@ -41,7 +41,8 @@
 
 		for (let feature of googleResults) {
 			let center = [feature.geometry.location.lng(), feature.geometry.location.lat()];
-			const readableAddress = feature.formatted_address;
+			const readableAddress = feature.address_components.filter((d) => d.types[0] === 'route')[0]
+				?.short_name;
 
 			let point = {
 				type: 'address',
@@ -54,7 +55,7 @@
 					properties: { readableAddress }
 				},
 
-				address: readableAddress,
+				address: feature.formatted_address,
 				readableAddress,
 				id: feature.place_id
 			};

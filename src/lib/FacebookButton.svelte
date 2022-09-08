@@ -2,7 +2,11 @@
 	export let quote;
 	export let url;
 
-	$: href = encodeURI(`https://facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`);
+	$: query = [quote && `quote=${encodeURIComponent(quote)}`, url && `u=${encodeURIComponent(url)}`]
+		.filter(Boolean)
+		.join('&');
+
+	$: href = `https://facebook.com/sharer/sharer.php?${query}`;
 </script>
 
 <a

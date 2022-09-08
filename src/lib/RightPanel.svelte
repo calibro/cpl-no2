@@ -14,10 +14,19 @@
 	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 	// const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
-	$: text = `A #Milano in ${$selectedAddress?.readableAddress}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di NO2. Scopri quanta NO2 respiri a Milano con la mappa di Cittadini per l'aria!`;
+	$: text = `A #Milano in ${
+		$selectedAddress?.readableAddress
+	}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di #NO2. ${Math.round(
+		Math.floor($selectedAddress?.value) / 10
+	)} volte oltre il limite a tutela della salute 😷. Scopri quanta NO2 respiri sulla mappa di Cittadini per l'aria!`;
+	$: textTwitter = `A #Milano in ${
+		$selectedAddress?.readableAddress
+	}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di #NO2. ${Math.round(
+		Math.floor($selectedAddress?.value) / 10
+	)} volte oltre il limite a tutela della salute 😷. Scopri quanta NO2 respiri sulla mappa di @citizensforair! @BeppeSala @AriannaCensi @Anna_Scavuzzo`;
 	$: url = $page.url.href;
-	const hashtags = 'inquinamento,sala';
-	const via = 'citizensforair';
+	const hashtags = '';
+	const via = '';
 
 	$: googleSatelliteUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&zoom=19&scale=2&size=458x165&maptype=satellite&key=${GOOGLE_API_KEY}&format=png`;
 	$: streetviewUrl = `https://maps.googleapis.com/maps/api/streetview?size=458x165&key=${GOOGLE_API_KEY}&location=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&source=outdoor`;
@@ -129,10 +138,10 @@
 		</div>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">condividi</p>
 		<div class="d-flex mt-1">
-			<TwitterButton {text} {url} {hashtags} {via} />
+			<TwitterButton text={textTwitter} {url} {hashtags} {via} />
 			<FacebookButton quote={text} {url} />
 			<TelegramButton {text} {url} />
-			<WhatsappButton {text} />
+			<WhatsappButton text={`${text} ${$page.url.href}`} />
 		</div>
 	</Box>
 	<Box>
