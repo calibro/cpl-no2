@@ -12,11 +12,7 @@
 
 	export let togglePanel, panelOpen;
 	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
-	const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
-
-	// const resetPOI = () => {
-	// 	selectedAddress.set(null);
-	// };
+	// const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
 	$: text = `A #Milano in ${$selectedAddress?.readableAddress}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di NO2. Scopri quanta NO2 respiri a Milano con la mappa di Cittadini per l'aria!`;
 	$: url = $page.url.href;
@@ -25,10 +21,23 @@
 
 	$: googleSatelliteUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&zoom=19&scale=2&size=458x165&maptype=satellite&key=${GOOGLE_API_KEY}&format=png`;
 	$: streetviewUrl = `https://maps.googleapis.com/maps/api/streetview?size=458x165&key=${GOOGLE_API_KEY}&location=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&source=outdoor`;
-	$: bgUrl =
-		$selectedAddress?.type === 'address' || $selectedAddress?.type === 'school'
-			? streetviewUrl
-			: googleSatelliteUrl;
+	// $: bgUrl =
+	// 	$selectedAddress?.type === 'address' || $selectedAddress?.type === 'school'
+	// 		? streetviewUrl
+	// 		: googleSatelliteUrl;
+
+	$: checkUrl = `https://maps.googleapis.com/maps/api/streetview/metadata?size=458x165&key=${GOOGLE_API_KEY}&location=${$selectedAddress?.feature.geometry.coordinates[1]},${$selectedAddress?.feature.geometry.coordinates[0]}&source=outdoor`;
+
+	const checkStreetview = async function (url) {
+		const response = await fetch(url);
+		if (response.ok) {
+			return await response.json();
+		} else {
+			return {
+				status: 'ZERO_RESULTS'
+			};
+		}
+	};
 
 	const onScroll = (e) => {
 		if (e.target.scrollTop === 0) {
@@ -63,13 +72,50 @@
 
 		<Bar value={$selectedAddress?.value} />
 	</Box>
-	<Box height={'165px'} background={`url(${bgUrl})`}>
+	{#if $selectedAddress?.type === 'address' || $selectedAddress?.type === 'school'}
+		{#await checkStreetview(checkUrl)}
+			<Box height={'165px'}>
+				<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
+
+				<p class="fs-5">
+					{$selectedAddress?.readableAddress}
+				</p>
+			</Box>
+		{:then response}
+			{#if response.status !== 'OK'}
+				<Box height={'165px'} background={`url(${googleSatelliteUrl})`}>
+					<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
+
+					<p class="fs-5">
+						{$selectedAddress?.readableAddress}
+					</p>
+				</Box>
+			{:else}
+				<Box height={'165px'} background={`url(${streetviewUrl})`}>
+					<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
+
+					<p class="fs-5">
+						{$selectedAddress?.readableAddress}
+					</p>
+				</Box>
+			{/if}
+		{/await}
+	{:else}
+		<Box height={'165px'} background={`url(${googleSatelliteUrl})`}>
+			<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
+
+			<p class="fs-5">
+				{$selectedAddress?.readableAddress}
+			</p>
+		</Box>
+	{/if}
+	<!-- <Box height={'165px'} background={`url(${bgUrl})`}>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
 
 		<p class="fs-5">
 			{$selectedAddress?.readableAddress}
 		</p>
-	</Box>
+	</Box> -->
 	<Box>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">effetti sulla salute</p>
 		<Sentence value={$selectedAddress?.value} />
