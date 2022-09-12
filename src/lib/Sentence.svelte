@@ -39,8 +39,8 @@
 </script>
 
 <p class="fs-5 mb-0">
-	L'esposizione a <b>{Math.round($tValue)} µg/m3</b> di NO<sub>2</sub> comporta un aumento del
-	rischio {#each deseaseKeys as desease, i}
+	L'esposizione cronica a <b>{Math.round($tValue)} µg/m3</b> di NO<sub>2</sub> comporta un aumento
+	del rischio {#each deseaseKeys as desease, i}
 		{desease}
 		del <b>{Math.round(percentages['percentage' + i])}%</b>
 		{#if i === 0} {'e '} {:else}.{/if}

@@ -80,9 +80,9 @@
 </script>
 
 <div class="w-100 autocompleteContainer">
-	<div class="d-flex fs-7 fw-bold mb-2">
+	<div class="d-flex fs-5 fw-bold mb-3 justify-content-center">
 		<div
-			class="pointer"
+			class="pointer badge rounded-pill text-bg-primary px-3 py-2"
 			class:text-white-50={$searchMode !== 'address'}
 			class:text-decoration-underline={$searchMode === 'address'}
 			on:click={() => changeSearchMode('address')}
@@ -93,7 +93,7 @@
 			class:text-white-50={$searchMode !== 'school'}
 			class:text-decoration-underline={$searchMode === 'school'}
 			on:click={() => changeSearchMode('school')}
-			class="ms-2 pointer"
+			class="ms-2 pointer badge rounded-pill text-bg-primary px-3 py-2"
 		>
 			Scuole
 		</div>
@@ -111,7 +111,7 @@
 				bind:selectedItem={selectedFeature}
 				className="w-100"
 				inputClassName="form-control form-control-lg"
-				placeholder="inserisci un indirizzo..."
+				placeholder="cerca un indirizzo..."
 				noResultsText="nessun indirizzo trovato"
 				maxItemsToShowInList={'5'}
 				hideArrow={true}
@@ -128,7 +128,7 @@
 				bind:selectedItem={selectedFeature}
 				className="w-100"
 				inputClassName="form-control form-control-lg"
-				placeholder="inserisci una scuola..."
+				placeholder="cerca una scuola..."
 				noResultsText="nessuna scuola trovata"
 				moreItemsText="scuole non mostrate"
 				maxItemsToShowInList={5}

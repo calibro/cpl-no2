@@ -14,6 +14,8 @@
 	export let gridRawData, schools;
 	const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
+	const zoomTo = 15;
+
 	const icons = [
 		{ url: schoolIcon, id: 'school' },
 		{ url: homeIcon, id: 'home' },
@@ -61,7 +63,7 @@
 			if (map) {
 				map.easeTo({
 					center: $selectedAddress.feature.geometry.coordinates,
-					zoom: map.getZoom() > 13 ? map.getZoom() : 13,
+					zoom: map.getZoom() > zoomTo ? map.getZoom() : zoomTo,
 					padding: padding
 				});
 				//square.properties.icon = $selectedAddress.type === 'address' ? 'home' : 'school';
@@ -89,7 +91,7 @@
 
 				map.flyTo({
 					center: $selectedAddress.feature.geometry.coordinates,
-					zoom: map.getZoom() > 13 ? map.getZoom() : 13,
+					zoom: map.getZoom() > zoomTo ? map.getZoom() : zoomTo,
 					padding: padding
 				});
 			}
@@ -106,7 +108,7 @@
 	onMount(() => {
 		map = new Map({
 			container: mapContainer,
-			//style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+			//style: 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json',
 			style: `https://api.maptiler.com/maps/toner/style.json?key=${MAPTILER_API_KEY}`,
 			bounds: $bboxGrid,
 			fitBoundsOptions: { padding: 20 },
@@ -148,6 +150,23 @@
 				) {
 					labelLayerId = layers[i].id;
 					break;
+				}
+
+				if (layers[i].id === 'water' || layers[i].id === 'waterway') {
+					map.setPaintProperty(layers[i].id, `${layers[i].type}-color`, '#d4dadc');
+				}
+
+				const roads = ['road_secondary', 'road_primary', 'road_highway'];
+
+				if (roads.includes(layers[i].id)) {
+					const color = {
+						stops: [
+							[10, '#444444'],
+							[12, '#444444'],
+							[15, '#444444']
+						]
+					};
+					map.setPaintProperty(layers[i].id, `${layers[i].type}-color`, color);
 				}
 			}
 

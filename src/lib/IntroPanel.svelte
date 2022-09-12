@@ -41,14 +41,22 @@
 				di dove lavori, o selezionando una scuola.
 			</p>
 			<p class="mb-0 fs-7 text-decoration-underline">
-				Forniamo al pubblico la stima più dettagliata sulle concentrazioni di inquinamento da
-				traffico a Milano
+				<a
+					class="text-white"
+					href="https://www.cittadiniperlaria.org/no2-no-grazie-2020/"
+					target="_blank"
+				>
+					Forniamo al pubblico la stima più dettagliata sulle concentrazioni di inquinamento da
+					traffico a Milano
+				</a>
 			</p>
 		</Box>
 		<Box>
 			<AddressSearch id="intro_address" {schools} />
-			<button on:click={selectDefaultAddress} class="btn btn-light rounded-pill mt-3 w-100">
-				...o esplora la mappa
+		</Box>
+		<Box>
+			<button on:click={selectDefaultAddress} class="btn btn-light rounded-pill w-100">
+				esplora liberamente la mappa
 			</button>
 		</Box>
 
