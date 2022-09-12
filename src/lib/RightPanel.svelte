@@ -57,7 +57,7 @@
 
 <div
 	style="overflow:{!panelOpen ? 'auto' : 'hidden'}"
-	class="rightPanel w-100 h-100 bg-indigo shadow-sm p-3 pt-0 p-md-3"
+	class="rightPanel w-100 h-100 bg-dark-gray shadow-sm p-3 pt-0 p-md-3"
 	on:scroll={onScroll}
 >
 	<div class="d-md-none d-grid">
@@ -84,26 +84,26 @@
 	{#if $selectedAddress?.type === 'address' || $selectedAddress?.type === 'school'}
 		{#await checkStreetview(checkUrl)}
 			<Box height={'165px'}>
-				<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
+				<p class="m-0 fs-7 text-white fw-semibold text-uppercase mb-2">indirizzo</p>
 
-				<p class="fs-5">
+				<p class="fs-5 text-white">
 					{$selectedAddress?.readableAddress}
 				</p>
 			</Box>
 		{:then response}
 			{#if response.status !== 'OK'}
 				<Box height={'165px'} background={`url(${googleSatelliteUrl})`}>
-					<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
+					<p class="m-0 fs-7 fw-semibold text-uppercase mb-2 text-white">indirizzo</p>
 
-					<p class="fs-5">
+					<p class="fs-5 text-white">
 						{$selectedAddress?.readableAddress}
 					</p>
 				</Box>
 			{:else}
 				<Box height={'165px'} background={`url(${streetviewUrl})`}>
-					<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
+					<p class="m-0 fs-7 fw-semibold text-uppercase mb-2 text-white">indirizzo</p>
 
-					<p class="fs-5">
+					<p class="fs-5 text-white">
 						{$selectedAddress?.readableAddress}
 					</p>
 				</Box>
@@ -111,9 +111,9 @@
 		{/await}
 	{:else}
 		<Box height={'165px'} background={`url(${googleSatelliteUrl})`}>
-			<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">indirizzo</p>
+			<p class="m-0 fs-7 fw-semibold text-uppercase mb-2 text-white">indirizzo</p>
 
-			<p class="fs-5">
+			<p class="fs-5 text-white">
 				{$selectedAddress?.readableAddress}
 			</p>
 		</Box>
@@ -132,14 +132,14 @@
 	<Box>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">agisci</p>
 		<div class="d-grid mt-1 mb-2">
-			<a href="https://google.com" class="btn btn-light rounded-pill" role="button"
+			<a href="https://google.com" class="btn btn-dark-gray rounded-pill" role="button"
 				>Sottoscrivi l'appello!</a
 			>
 		</div>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">condividi</p>
 		<div class="d-flex mt-1">
 			<TwitterButton text={textTwitter} {url} {hashtags} {via} />
-			<FacebookButton quote={text} {url} />
+			<FacebookButton {url} />
 			<TelegramButton {text} {url} />
 			<WhatsappButton text={`${text} ${$page.url.href}`} />
 		</div>
@@ -148,7 +148,7 @@
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">fonte/elaborazione</p>
 		<p>
 			<a
-				class="text-white"
+				class="text-body"
 				href="https://www.cittadiniperlaria.org/comitato-scientifico-del-progetto-no2-no-grazie/"
 				target="_blank"
 				>Elaborazione dati 2/2020: Comitato scientifico del progetto "NO<sub>2</sub> NO Grazie!"</a
@@ -156,7 +156,7 @@
 		</p>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">design e sviluppo</p>
 		<p class="mb-0">
-			<a class="text-white" href="https://calib.ro" target="_blank">Studio Calibro</a>
+			<a class="text-body" href="https://calib.ro" target="_blank">Studio Calibro</a>
 		</p>
 	</Box>
 	<Box>
@@ -166,7 +166,7 @@
 				href="https://www.cittadiniperlaria.org/"
 				role="button"
 				style="max-width: 200px;"
-				class="btn btn-light rounded-pill"
+				class="btn btn-dark-gray rounded-pill"
 				target="_blank"
 				><img src={`${base}/logo.png`} class="img-fluid" alt="logo cittadini per l'aria" /></a
 			>

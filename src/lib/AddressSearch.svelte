@@ -80,22 +80,22 @@
 </script>
 
 <div class="w-100 autocompleteContainer">
-	<div class="d-flex fs-5 fw-bold mb-3 justify-content-center">
+	<div class="d-flex fs-6 fw-bold mb-2 justify-content-center">
 		<div
-			class="pointer badge rounded-pill text-bg-primary px-3 py-2"
-			class:text-white-50={$searchMode !== 'address'}
+			class="pointer badge rounded-pill text-bg-dark-gray px-3 py-2"
+			class:text-black-50={$searchMode !== 'address'}
 			class:text-decoration-underline={$searchMode === 'address'}
 			on:click={() => changeSearchMode('address')}
 		>
 			Indirizzo
 		</div>
 		<div
-			class:text-white-50={$searchMode !== 'school'}
+			class:text-black-50={$searchMode !== 'school'}
 			class:text-decoration-underline={$searchMode === 'school'}
 			on:click={() => changeSearchMode('school')}
-			class="ms-2 pointer badge rounded-pill text-bg-primary px-3 py-2"
+			class="ms-2 pointer badge rounded-pill text-bg-dark-gray px-3 py-2"
 		>
-			Scuole
+			Scuola
 		</div>
 	</div>
 	{#if true}
@@ -149,7 +149,8 @@
 
 <style>
 	.autocompleteContainer :global(.autocomplete-list-item.selected) {
-		background-color: var(--bs-purple) !important;
+		background-color: var(--bs-dark-gray) !important;
+		color: var(--bs-body-color) !important;
 	}
 
 	.autocompleteContainer :global(.autocomplete) {

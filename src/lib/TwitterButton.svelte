@@ -20,7 +20,7 @@
 
 <a
 	style="width:35px;height:35px"
-	class="rounded-circle btn btn-lg btn-light p-0 d-flex align-items-center justify-content-center mx-1 lh-1"
+	class="rounded-circle btn btn-lg btn-dark-gray p-0 d-flex align-items-center justify-content-center mx-1 lh-1"
 	role="button"
 	{href}
 	target="_blank"

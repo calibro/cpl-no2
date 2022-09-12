@@ -17,8 +17,6 @@ const startScale = scaleLinear()
 	.range([interpolateInferno(1), interpolateWarm(1), interpolateWarm(1)])
 	.interpolate(interpolateRgb.gamma(2.2));
 
-console.log(startScale(0.25));
-
 export const colorScale = readable(
 	scaleSequential((t) => {
 		if (t <= 0.25) {

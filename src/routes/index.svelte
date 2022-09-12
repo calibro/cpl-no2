@@ -71,8 +71,8 @@
 {/if}
 
 {#if !showInfoFirst}
-	<div transition:fade class="adderssSearchContainer position-absolute">
-		<div class="rounded-md bg-indigo p-2 p-md-3">
+	<div transition:fade class="rounded-md adderssSearchContainer position-absolute bg-dark-gray p-2">
+		<div class="rounded bg-white p-2 p-md-3">
 			<AddressSearch id="map_address" {schools} />
 		</div>
 	</div>

@@ -22,19 +22,19 @@
 </script>
 
 <div
-	class="w-100 h-100 bg-indigo bg-opacity-75 d-flex align-items-center justify-content-center overflow-hidden"
+	class="w-100 h-100 bg-dark bg-opacity-25 d-flex align-items-center justify-content-center overflow-hidden"
 >
-	<div class="infoContainer bg-indigo rounded-md p-3 d-flex flex-column">
+	<div class="infoContainer bg-dark-gray rounded-md p-3 d-flex flex-column">
 		<Box>
 			<h6 class="mb-3 text-uppercase">Sai cosa respiri?</h6>
 
-			<p class="question fs-3 lh-sm">
+			<p class="question fs-3 lh-sm fw-bold">
 				Scopri quanto NO<sub class="questionNumber">2</sub> respiri a Milano!
 			</p>
 
 			<p>
-				Il biossido di azoto (NO<sub>2</sub>) che proviene dai veicoli diesel che percorrono le vie
-				di Milano causa la morte prematura di <b>1500</b> persone ogni anno nel capoluogo lombardo.
+				Il biossido di azoto (NO<sub>2</sub>), che proviene dai veicoli diesel che percorrono le vie
+				di Milano, causa la morte prematura di <b>1500</b> persone ogni anno nel capoluogo lombardo.
 			</p>
 			<p>
 				Scopri la concentrazione annua di NO<sub>2</sub> inserendo il tuo indirizzo a Milano, quello
@@ -42,7 +42,7 @@
 			</p>
 			<p class="mb-0 fs-7 text-decoration-underline">
 				<a
-					class="text-white"
+					class="text-body"
 					href="https://www.cittadiniperlaria.org/no2-no-grazie-2020/"
 					target="_blank"
 				>
@@ -55,8 +55,8 @@
 			<AddressSearch id="intro_address" {schools} />
 		</Box>
 		<Box>
-			<button on:click={selectDefaultAddress} class="btn btn-light rounded-pill w-100">
-				esplora liberamente la mappa
+			<button on:click={selectDefaultAddress} class="btn btn-dark-gray rounded-pill w-100">
+				oppure esplora la mappa
 			</button>
 		</Box>
 
@@ -66,7 +66,7 @@
 				<a
 					href="https://www.cittadiniperlaria.org/"
 					role="button"
-					class="btn btn-light rounded-pill"
+					class="btn btn-dark-gray rounded-pill"
 					target="_blank"
 					><img src={`${base}/logo.png`} class="img-fluid" alt="logo cittadini per l'aria" /></a
 				>

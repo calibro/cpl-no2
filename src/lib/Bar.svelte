@@ -12,7 +12,7 @@
 	$: marginScale = scaleLinear().range([0, 100]).domain($colorScale.domain());
 
 	const annotations = [
-		{ value: 10, text: 'Soglia annua OMS a tutela della salute' },
+		{ value: 10, text: 'Soglia annua a tutela della salute' },
 		{ value: 40, text: 'Limite medio annuo di legge' }
 	];
 
@@ -45,12 +45,12 @@
 		{#each annotations as annotation}
 			<div
 				style="margin-left:{marginScale(annotation.value)}%;"
-				class="annotationBar bg-white position-absolute h-100"
+				class="annotationBar bg-dark border border-white position-absolute h-100"
 			/>
 		{/each}
 		<div
 			style="margin-left:{marginScale(value)}%;color:{$colorScale(value)};"
-			class="value fw-bold rounded-circle bg-white d-flex align-items-center justify-content-center position-relative"
+			class="value border border-dark-gray fw-bold rounded-circle bg-white d-flex align-items-center justify-content-center position-relative"
 		>
 			{Math.round($tValue)}
 		</div>
@@ -93,11 +93,11 @@
 	}
 
 	.annotationBar {
-		width: 1px;
+		width: 3px;
 	}
 
 	.annotationText {
-		max-width: 150px;
+		max-width: 145px;
 		transform: translateX(-50%);
 	}
 </style>

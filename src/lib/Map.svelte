@@ -205,10 +205,10 @@
 						'circle-color': 'black',
 						//'circle-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.75],
 						'circle-opacity': 0.5
-					},
-					layout: {
-						visibility: 'none'
 					}
+					// layout: {
+					// 	visibility: 'none'
+					// }
 				},
 				labelLayerId
 			);
@@ -286,7 +286,7 @@
 <div class="map" id="map" bind:this={mapContainer} />
 <div id="markerContainer" class="d-flex flex-column justify-content-center" bind:this={markerEl}>
 	<div
-		class="bg-white w-100 flex-grow-1 flex-shrink-1 rounded d-flex align-items-center justify-content-center fs-1"
+		class="bg-white w-100 flex-grow-1 flex-shrink-1 rounded d-flex align-items-center justify-content-center fs-2"
 		style="color:{$colorScale($selectedAddress?.value)}"
 	>
 		{#if $selectedAddress?.type === 'address'}
@@ -294,7 +294,7 @@
 		{:else if $selectedAddress?.type === 'school'}
 			<i class="bi bi-pencil-fill" />
 		{:else}
-			<i class="bi bi-square" />
+			<i class="bi bi-square-fill" />
 		{/if}
 	</div>
 	<div class="text-white flex-grow-0 flex-shrink-0 d-flex justify-content-center">
@@ -347,9 +347,9 @@
 
 	.map :global(.mapboxgl-ctrl-group),
 	.map :global(.maplibregl-ctrl-group) {
-		background: var(--bs-indigo);
+		background: white;
 	}
-
+	/* 
 	.map :global(.mapboxgl-ctrl button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon),
 	.map :global(.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon) {
 		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='29' height='29' viewBox='0 0 29 29' xmlns='http://www.w3.org/2000/svg' fill='white'%3E%3Cpath d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5z'/%3E%3C/svg%3E");
@@ -362,7 +362,7 @@
 	.map :global(.mapboxgl-ctrl button.mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon),
 	.map :global(.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon) {
 		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='29' height='29' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' fill='white'%3E%3Cpath d='M10 4C9 4 9 5 9 5v.1A5 5 0 0 0 5.1 9H5s-1 0-1 1 1 1 1 1h.1A5 5 0 0 0 9 14.9v.1s0 1 1 1 1-1 1-1v-.1a5 5 0 0 0 3.9-3.9h.1s1 0 1-1-1-1-1-1h-.1A5 5 0 0 0 11 5.1V5s0-1-1-1zm0 2.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7z'/%3E%3Ccircle cx='10' cy='10' r='2'/%3E%3C/svg%3E");
-	}
+	} */
 
 	@media (min-width: 768px) {
 		.map :global(.mapboxgl-ctrl-bottom-left),

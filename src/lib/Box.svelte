@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class={`box bg-purple rounded p-3 mb-2 position-relative ${className}`}
+	class={`box bg-white  rounded p-3 mb-2 position-relative ${className}`}
 	style="height:{height ? height : 'auto'};background-image:{background
 		? 'linear-gradient(180deg, rgba(41, 41, 72, 0.5) 40%, rgba(47, 47, 74, 0) 100%), ' + background
 		: 'unset'}"

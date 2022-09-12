@@ -4,7 +4,8 @@
 
 $custom-colors: (
     "purple":#494266,
-    "indigo":#2F2F4A
+    "indigo":#2F2F4A,
+    "dark-gray":$gray-200,
 );
 
 $custom-sizes: (
@@ -15,7 +16,7 @@ $custom-sizes: (
 $theme-colors: map-merge($theme-colors, $custom-colors);
 $font-sizes: map-merge($font-sizes, $custom-sizes);
 
-$body-color: white;
+// $body-color: white;
 
 $font-family-sans-serif: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif, 'Apple Color Emoji',
