@@ -6,11 +6,15 @@
 		const url2 = `/all_schools.json`;
 		const response2 = await fetch(url2);
 
+		const url3 = `/municipi.json`;
+		const response3 = await fetch(url3);
+
 		return {
 			status: response.status,
 			props: {
 				grid: response.ok && (await response.json()),
-				schools: response2.ok && (await response2.json())
+				schools: response2.ok && (await response2.json()),
+				municipi: response3.ok && (await response3.json())
 			}
 		};
 	}
@@ -24,7 +28,7 @@
 	import IntroPanel from '$lib/IntroPanel.svelte';
 	import AddressSearch from '$lib/AddressSearch.svelte';
 	import { swipe } from 'svelte-gestures';
-	export let grid, schools;
+	export let grid, schools, municipi;
 
 	let showInfoPanel = true;
 	let showInfoFirst = true;
@@ -66,7 +70,7 @@
 		use:swipe={{ timeframe: 300, minSwipeDistance: 60 }}
 		on:swipe={handler}
 	>
-		<RightPanel togglePanel={toggleTop} panelOpen={topRightPanel} />
+		<RightPanel togglePanel={toggleTop} panelOpen={topRightPanel} {municipi} />
 	</div>
 {/if}
 

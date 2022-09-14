@@ -29,6 +29,7 @@
 		"@turf/boolean-point-in-polygon": "^6.5.0",
 		"@turf/buffer": "^6.5.0",
 		"@turf/centroid": "^6.5.0",
+		"@turf/points-within-polygon": "^6.5.0",
 		"bootstrap": "^5.2.0",
 		"bootstrap-icons": "^1.9.1",
 		"d3-array": "^3.2.0",

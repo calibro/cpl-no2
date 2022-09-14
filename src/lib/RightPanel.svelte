@@ -1,4 +1,6 @@
 <script>
+	import pwp from '@turf/points-within-polygon';
+	import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 	import { selectedAddress } from '$lib/stores';
 	import { page } from '$app/stores';
 	import Bar from '$lib/Bar.svelte';
@@ -10,7 +12,8 @@
 	import Sentence from '$lib/Sentence.svelte';
 	import { base } from '$app/paths';
 
-	export let togglePanel, panelOpen;
+	export let togglePanel, panelOpen, municipi;
+	let municipio;
 	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 	// const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
@@ -25,6 +28,17 @@
 		Math.floor($selectedAddress?.value) / 10
 	)} volte oltre il limite a tutela della salute 😷. Scopri quanta NO2 respiri sulla mappa di @citizensforair! @BeppeSala @AriannaCensi @Anna_Scavuzzo`;
 	$: url = $page.url.href;
+
+	$: {
+		if ($selectedAddress) {
+			municipi.features.forEach((d) => {
+				if (booleanPointInPolygon($selectedAddress.feature, d)) {
+					municipio = d.properties.MUNICIPIO;
+				}
+			});
+		}
+	}
+
 	const hashtags = '';
 	const via = '';
 
@@ -132,8 +146,10 @@
 	<Box>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">agisci</p>
 		<div class="d-grid mt-1 mb-2">
-			<a href="https://google.com" class="btn btn-dark-gray rounded-pill" role="button"
-				>Sottoscrivi l'appello!</a
+			<a
+				href={`https://cittadiniperlaria.org/appello-al-sindaco/?no2value=${$selectedAddress?.value}&municipality=${municipio}`}
+				class="btn btn-dark-gray rounded-pill"
+				role="button">Sottoscrivi l'appello!</a
 			>
 		</div>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">condividi</p>
