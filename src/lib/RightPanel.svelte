@@ -1,5 +1,4 @@
 <script>
-	import pwp from '@turf/points-within-polygon';
 	import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
 	import { selectedAddress } from '$lib/stores';
 	import { page } from '$app/stores';
@@ -88,7 +87,7 @@
 		</div>
 	</div>
 	<Box>
-		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">
+		<p class="m-0 fs-6 fw-semibold text-uppercase text-center mb-2">
 			concentrazione di NO<sub>2</sub>
 			<span class="text-lowercase">(µg/m<sup>3</sup>)</span>
 		</p>
@@ -100,7 +99,7 @@
 			<Box height={'165px'}>
 				<p class="m-0 fs-7 text-white fw-semibold text-uppercase mb-2">indirizzo</p>
 
-				<p class="fs-5 text-white">
+				<p class="fs-5 fw-bold text-white">
 					{$selectedAddress?.readableAddress}
 				</p>
 			</Box>
@@ -109,7 +108,7 @@
 				<Box height={'165px'} background={`url(${googleSatelliteUrl})`}>
 					<p class="m-0 fs-7 fw-semibold text-uppercase mb-2 text-white">indirizzo</p>
 
-					<p class="fs-5 text-white">
+					<p class="fs-5 fw-bold text-white">
 						{$selectedAddress?.readableAddress}
 					</p>
 				</Box>
@@ -117,7 +116,7 @@
 				<Box height={'165px'} background={`url(${streetviewUrl})`}>
 					<p class="m-0 fs-7 fw-semibold text-uppercase mb-2 text-white">indirizzo</p>
 
-					<p class="fs-5 text-white">
+					<p class="fs-5 fw-bold text-white">
 						{$selectedAddress?.readableAddress}
 					</p>
 				</Box>
@@ -127,7 +126,7 @@
 		<Box height={'165px'} background={`url(${googleSatelliteUrl})`}>
 			<p class="m-0 fs-7 fw-semibold text-uppercase mb-2 text-white">indirizzo</p>
 
-			<p class="fs-5 text-white">
+			<p class="fs-5 fw-bold text-white">
 				{$selectedAddress?.readableAddress}
 			</p>
 		</Box>
@@ -144,15 +143,16 @@
 		<Sentence value={$selectedAddress?.value} />
 	</Box>
 	<Box>
-		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">agisci</p>
 		<div class="d-grid mt-1 mb-2">
 			<a
 				href={`https://cittadiniperlaria.org/appello-al-sindaco/?no2value=${$selectedAddress?.value}&municipality=${municipio}`}
-				class="btn btn-dark-gray rounded-pill"
+				class="btn btn-lg btn-accent rounded-pill fw-bold"
 				role="button">Sottoscrivi l'appello!</a
 			>
 		</div>
-		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">condividi</p>
+	</Box>
+	<Box>
+		<!-- <p class="m-0 fs-7 fw-semibold text-uppercase mb-2">condividi</p> -->
 		<div class="d-flex mt-1">
 			<TwitterButton text={textTwitter} {url} {hashtags} {via} />
 			<FacebookButton {url} />

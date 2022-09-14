@@ -10,11 +10,11 @@
 </script>
 
 <a
-	style="width:35px;height:35px"
+	style="width:50px;height:50px"
 	class="rounded-circle btn btn-dark-gray p-0 btn-lg d-flex align-items-center justify-content-center mx-1 lh-1"
 	role="button"
 	{href}
-	target="_blank"><i class="bi bi-telegram telegram" /></a
+	target="_blank"><i class="fs-2 bi bi-telegram telegram" /></a
 >
 
 <style>

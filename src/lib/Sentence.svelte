@@ -22,7 +22,7 @@
 		grid: { 'di mortalità': 4, 'di infarto': 3 },
 		school: {
 			'di asma nei bambini e giovani': 12,
-			'di infezioni respiratorie acute': 9
+			'di infezioni respiratorie acute nei bambini': 9
 		}
 
 		// 'di incidenza di asma negli adulti': 10

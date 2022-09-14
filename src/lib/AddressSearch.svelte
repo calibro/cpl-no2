@@ -87,7 +87,7 @@
 			class:text-decoration-underline={$searchMode === 'address'}
 			on:click={() => changeSearchMode('address')}
 		>
-			Indirizzo
+			Cerca un indirizzo
 		</div>
 		<div
 			class:text-black-50={$searchMode !== 'school'}
@@ -95,7 +95,7 @@
 			on:click={() => changeSearchMode('school')}
 			class="ms-2 pointer badge rounded-pill text-bg-dark-gray px-3 py-2"
 		>
-			Scuola
+			Cerca una scuola
 		</div>
 	</div>
 	{#if true}
@@ -111,7 +111,7 @@
 				bind:selectedItem={selectedFeature}
 				className="w-100"
 				inputClassName="form-control form-control-lg"
-				placeholder="cerca un indirizzo..."
+				placeholder="es: Piazza Duomo 1"
 				noResultsText="nessun indirizzo trovato"
 				maxItemsToShowInList={'5'}
 				hideArrow={true}
@@ -128,7 +128,7 @@
 				bind:selectedItem={selectedFeature}
 				className="w-100"
 				inputClassName="form-control form-control-lg"
-				placeholder="cerca una scuola..."
+				placeholder="es: Vittorio Veneto"
 				noResultsText="nessuna scuola trovata"
 				moreItemsText="scuole non mostrate"
 				maxItemsToShowInList={5}

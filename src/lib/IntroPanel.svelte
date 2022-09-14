@@ -28,7 +28,7 @@
 		<Box>
 			<h6 class="mb-3 text-uppercase">Sai cosa respiri?</h6>
 
-			<p class="question fs-3 lh-sm fw-bold">
+			<p class="question fs-1 lh-sm fw-bold">
 				Scopri quanto NO<sub class="questionNumber">2</sub> respiri a Milano!
 			</p>
 
@@ -83,7 +83,14 @@
 	}
 
 	.question {
-		background: linear-gradient(267.15deg, #f6e349 11.12%, #f1a24d 44.05%, #cc51eb 75.64%);
+		background: linear-gradient(
+			90deg,
+			#f6e349 11.12%,
+			#f1a24d 34.05%,
+			#cc51eb 55.64%,
+			#71196e 65%,
+			#10092d 75%
+		);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
@@ -91,7 +98,7 @@
 	}
 
 	.questionNumber {
-		background: linear-gradient(267.15deg, #f6e349 0%, #f1a24d 100%);
+		background: linear-gradient(0deg, #71196e 0%, #10092d 10%);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
@@ -99,7 +106,7 @@
 
 	@media (min-width: 768px) {
 		.infoContainer {
-			width: 400px;
+			width: 430px;
 			height: auto;
 			max-height: 100%;
 		}
