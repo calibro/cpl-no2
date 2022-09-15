@@ -144,11 +144,12 @@
 			let labelLayerId = '';
 
 			map.setPaintProperty('road_label_primary', `text-color`, 'rgba(0,0,0,0.5)');
+			map.setPaintProperty('road_label_primary', `text-halo-width`, 1);
+			map.setPaintProperty('road_label_primary', `text-halo-color`, 'rgba(255,255,255,0.5)');
 			map.setPaintProperty('road_label_secondary', `text-color`, 'rgba(0,0,0,0.5)');
 			map.setPaintProperty('road_label_secondary', `text-halo-width`, 1);
 			map.setPaintProperty('road_label_secondary', `text-halo-color`, 'rgba(255,255,255,0.5)');
-			//road_label_primary
-			// road_label_secondary
+
 			for (let i = 0; i < layers.length; i++) {
 				if (
 					layers[i].type === 'symbol' &&

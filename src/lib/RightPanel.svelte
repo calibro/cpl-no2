@@ -170,7 +170,7 @@
 				>Elaborazione dati 2/2020: Comitato scientifico del progetto "NO<sub>2</sub> NO Grazie!"</a
 			>
 		</p>
-		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">design e sviluppo</p>
+		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">design e sviluppo mappa</p>
 		<p class="mb-0">
 			<a class="text-body" href="https://calib.ro" target="_blank">Studio Calibro</a>
 		</p>
