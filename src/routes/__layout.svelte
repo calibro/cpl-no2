@@ -24,7 +24,7 @@
 	{description}
 	,
 	openGraph={{
-		url: $page.url,
+		url: 'https://www.cittadiniperlaria.org/milano-2020-sai-cosa-respiri/',
 		title: title,
 		description: description,
 		images: [
@@ -38,7 +38,7 @@
 		site_name: 'Scopri quanto NO2 respiri a Milano!'
 	}}
 	twitter={{
-		site: $page.url,
+		site: 'https://www.cittadiniperlaria.org/milano-2020-sai-cosa-respiri/',
 		cardType: 'summary_large_image',
 		title: title,
 		description: description,
