@@ -29,7 +29,7 @@
 		description: description,
 		images: [
 			{
-				url: `${$page.url}saicheariarespiri.png`,
+				url: `https://calib.ro/cpl-no2/saicheariarespiri.png`,
 				width: 1245,
 				height: 700,
 				alt: title
@@ -42,7 +42,7 @@
 		cardType: 'summary_large_image',
 		title: title,
 		description: description,
-		image: `${$page.url}saicheariarespiri.png`,
+		image: `https://calib.ro/cpl-no2/saicheariarespiri.png`,
 		imageAlt: title
 	}}
 />
