@@ -43,7 +43,7 @@
 			<p class="mb-0 fs-7 text-decoration-underline">
 				<a
 					class="text-body"
-					href="https://www.cittadiniperlaria.org/no2-no-grazie-2020/"
+					href="https://www.cittadiniperlaria.org/milano-2020-sai-cosa-respiri/#crediti"
 					target="_blank"
 				>
 					Forniamo al pubblico la stima più dettagliata sulle concentrazioni di inquinamento da
@@ -60,7 +60,7 @@
 			</button>
 		</Box>
 
-		<Box>
+		<!-- <Box>
 			<div class="d-flex align-items-center">
 				<div class="text-uppercase me-2 fs-7 fw-bold flex-grow-0 flex-shrink-0">un progetto di</div>
 				<a
@@ -71,7 +71,7 @@
 					><img src={`${base}/logo.png`} class="img-fluid" alt="logo cittadini per l'aria" /></a
 				>
 			</div>
-		</Box>
+		</Box> -->
 	</div>
 </div>
 

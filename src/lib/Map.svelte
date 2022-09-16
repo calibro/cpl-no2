@@ -1,5 +1,12 @@
 <script>
-	import { colorScale, bboxGrid, selectedAddress, mediaQuery, gridBoundary } from '$lib/stores';
+	import {
+		colorScale,
+		bboxGrid,
+		selectedAddress,
+		mediaQuery,
+		gridBoundary,
+		searchMode
+	} from '$lib/stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { Map, NavigationControl, GeolocateControl, Marker } from 'maplibre-gl';
 	import { feature, bbox, merge } from 'topojson-client';
@@ -27,6 +34,7 @@
 	let hoveredStateId;
 	let marker;
 	let markerEl;
+	let mapLoaded = false;
 
 	const md = mediaQuery('(min-width: 768px)');
 
@@ -43,6 +51,18 @@
 		feature.properties.color = $colorScale(feature.properties.NO2_stima);
 	});
 	const lookup = new PolygonLookup(grid);
+
+	$: {
+		if ($searchMode === 'school') {
+			if (map && mapLoaded) {
+				map.setLayoutProperty('schools', `visibility`, 'visible');
+			}
+		} else {
+			if (map && mapLoaded) {
+				map.setLayoutProperty('schools', `visibility`, 'none');
+			}
+		}
+	}
 
 	$: {
 		if (map && markerEl) {
@@ -140,6 +160,7 @@
 		map.addControl(new NavigationControl({ showCompass: false }), 'bottom-left');
 
 		map.on('load', function () {
+			mapLoaded = true;
 			const layers = map.getStyle().layers;
 			let labelLayerId = '';
 
@@ -210,13 +231,15 @@
 					type: 'circle',
 					source: 'schools',
 					paint: {
-						'circle-color': 'black',
+						'circle-color': 'white',
 						//'circle-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.75],
-						'circle-opacity': 0.5
+						'circle-opacity': 1,
+						'circle-stroke-color': 'black',
+						'circle-stroke-width': 1
+					},
+					layout: {
+						visibility: 'none'
 					}
-					// layout: {
-					// 	visibility: 'none'
-					// }
 				},
 				labelLayerId
 			);

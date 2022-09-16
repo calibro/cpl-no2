@@ -26,7 +26,7 @@
 	}, c'è una concentrazione media annua di ${$selectedAddress?.value} µg/m3 di #NO2. ${Math.round(
 		Math.floor($selectedAddress?.value) / 10
 	)} volte oltre il limite a tutela della salute 😷. Scopri quanta NO2 respiri sulla mappa di @citizensforair! @BeppeSala @AriannaCensi @Anna_Scavuzzo`;
-	$: url = $page.url.href;
+	const url = 'https://www.cittadiniperlaria.org/milano-2020-sai-cosa-respiri/';
 
 	$: {
 		if ($selectedAddress) {
@@ -147,6 +147,7 @@
 			<a
 				href={`https://cittadiniperlaria.org/appello-al-sindaco/?no2value=${$selectedAddress?.value}&municipality=${municipio}`}
 				class="btn btn-lg btn-accent rounded-pill fw-bold"
+				target="_blank"
 				role="button">Sottoscrivi l'appello!</a
 			>
 		</div>
@@ -162,18 +163,18 @@
 	</Box>
 	<Box>
 		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">fonte/elaborazione</p>
-		<p>
+		<p class="m-0 ">
 			<a
 				class="text-body"
-				href="https://www.cittadiniperlaria.org/comitato-scientifico-del-progetto-no2-no-grazie/"
+				href="https://www.cittadiniperlaria.org/milano-2020-sai-cosa-respiri/#crediti"
 				target="_blank"
-				>Elaborazione dati 2/2020: Comitato scientifico del progetto "NO<sub>2</sub> NO Grazie!"</a
+				>Elaborazione dati 2/2020: Comitato scientifico del progetto "NO2 NO Grazie!"</a
 			>
 		</p>
-		<p class="m-0 fs-7 fw-semibold text-uppercase mb-2">design e sviluppo mappa</p>
+		<!-- <p class="m-0 fs-7 fw-semibold text-uppercase mb-2">design e sviluppo mappa</p>
 		<p class="mb-0">
 			<a class="text-body" href="https://calib.ro" target="_blank">Studio Calibro</a>
-		</p>
+		</p> -->
 	</Box>
 	<Box>
 		<div class="d-flex align-items-center justify-content-center">

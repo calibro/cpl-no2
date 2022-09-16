@@ -82,18 +82,18 @@
 <div class="w-100 autocompleteContainer">
 	<div class="d-flex fs-6 fw-bold mb-2 justify-content-center">
 		<div
-			class="pointer badge rounded-pill text-bg-dark-gray px-3 py-2"
-			class:text-black-50={$searchMode !== 'address'}
+			class="pointer badge rounded-pill text-bg-accent px-3 py-2"
+			class:text-white-50={$searchMode !== 'address'}
 			class:text-decoration-underline={$searchMode === 'address'}
 			on:click={() => changeSearchMode('address')}
 		>
 			Cerca un indirizzo
 		</div>
 		<div
-			class:text-black-50={$searchMode !== 'school'}
+			class:text-white-50={$searchMode !== 'school'}
 			class:text-decoration-underline={$searchMode === 'school'}
 			on:click={() => changeSearchMode('school')}
-			class="ms-2 pointer badge rounded-pill text-bg-dark-gray px-3 py-2"
+			class="ms-2 pointer badge rounded-pill text-bg-accent px-3 py-2"
 		>
 			Cerca una scuola
 		</div>
