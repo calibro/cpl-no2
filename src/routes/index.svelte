@@ -101,7 +101,7 @@
 	}
 
 	.topRightPanel {
-		top: calc(100% - 155px);
+		top: calc(100% - 205px);
 	}
 
 	.introPanelContainer {

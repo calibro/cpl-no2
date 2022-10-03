@@ -3,7 +3,12 @@
 	import { MetaTags } from 'svelte-meta-tags';
 	import { page } from '$app/stores';
 	import '../app.scss';
-	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+	// const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+	const GOOGLE_API_KEY =
+		process.env.NODE_ENV === 'development'
+			? import.meta.env.VITE_GOOGLE_API_KEY
+			: import.meta.env.VITE_GOOGLE_API_KEY_PROD;
+
 	// const initializeGapi = async () => {
 	// 	console.log('ciao');
 	// 	const geocoder = new google.maps.Geocoder();

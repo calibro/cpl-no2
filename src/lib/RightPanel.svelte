@@ -13,7 +13,10 @@
 
 	export let togglePanel, panelOpen, municipi;
 	let municipio;
-	const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+	const GOOGLE_API_KEY =
+		process.env.NODE_ENV === 'development'
+			? import.meta.env.VITE_GOOGLE_API_KEY
+			: import.meta.env.VITE_GOOGLE_API_KEY_PROD;
 	// const MAPTILER_API_KEY = import.meta.env.VITE_MAPTILER_API_KEY;
 
 	$: text = `A #Milano, ${
@@ -77,8 +80,9 @@
 		<div
 			on:click={() => togglePanel()}
 			aria-label="open and close information panel"
-			class="d-flex align-items-center justify-content-center"
+			class="d-flex align-items-center justify-content-center fs-7 my-1"
 		>
+			<span class="me-1">{panelOpen ? 'espandi' : 'riduci'} informazioni </span>
 			<i
 				class="bi"
 				class:bi-chevron-compact-up={panelOpen}

@@ -362,7 +362,7 @@
 
 	.map :global(.mapboxgl-ctrl-bottom-left),
 	.map :global(.maplibregl-ctrl-bottom-left) {
-		bottom: 155px;
+		bottom: 205px;
 	}
 
 	.map :global(.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl),

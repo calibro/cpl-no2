@@ -31,14 +31,24 @@
 			<p class="question fs-1 lh-sm fw-bold">
 				Scopri quanto NO<sub class="questionNumber">2</sub> respiri a Milano!
 			</p>
+			<p class="mb-0">
+				Scopri la concentrazione annua di NO<sub>2</sub> inserendo il tuo indirizzo a Milano, quello
+				di dove lavori, o selezionando una scuola.
+			</p>
+		</Box>
+		<Box>
+			<AddressSearch id="intro_address" {schools} />
+		</Box>
+		<Box>
+			<button on:click={selectDefaultAddress} class="btn btn-dark-gray rounded-pill w-100">
+				oppure esplora la mappa
+			</button>
+		</Box>
 
+		<Box>
 			<p>
 				Il biossido di azoto (NO<sub>2</sub>), che proviene dai veicoli diesel che percorrono le vie
 				di Milano, causa la morte prematura di <b>1500</b> persone ogni anno nel capoluogo lombardo.
-			</p>
-			<p>
-				Scopri la concentrazione annua di NO<sub>2</sub> inserendo il tuo indirizzo a Milano, quello
-				di dove lavori, o selezionando una scuola.
 			</p>
 			<p class="mb-0 fs-7 text-decoration-underline">
 				<a
@@ -51,27 +61,6 @@
 				</a>
 			</p>
 		</Box>
-		<Box>
-			<AddressSearch id="intro_address" {schools} />
-		</Box>
-		<Box>
-			<button on:click={selectDefaultAddress} class="btn btn-dark-gray rounded-pill w-100">
-				oppure esplora la mappa
-			</button>
-		</Box>
-
-		<!-- <Box>
-			<div class="d-flex align-items-center">
-				<div class="text-uppercase me-2 fs-7 fw-bold flex-grow-0 flex-shrink-0">un progetto di</div>
-				<a
-					href="https://www.cittadiniperlaria.org/"
-					role="button"
-					class="btn btn-dark-gray rounded-pill"
-					target="_blank"
-					><img src={`${base}/logo.png`} class="img-fluid" alt="logo cittadini per l'aria" /></a
-				>
-			</div>
-		</Box> -->
 	</div>
 </div>
 
