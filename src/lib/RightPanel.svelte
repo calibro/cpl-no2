@@ -162,7 +162,7 @@
 			<TwitterButton text={textTwitter} {url} {hashtags} {via} />
 			<FacebookButton {url} />
 			<TelegramButton {text} {url} />
-			<WhatsappButton text={`${text} ${$page.url.href}`} />
+			<WhatsappButton text={`${text} ${url}`} />
 		</div>
 	</Box>
 	<Box>
