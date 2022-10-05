@@ -68,7 +68,7 @@
 	.infoContainer {
 		width: 100%;
 		overflow-y: auto;
-		height: 100%;
+		max-height: 100%;
 	}
 
 	.question {
@@ -97,7 +97,6 @@
 		.infoContainer {
 			width: 430px;
 			height: auto;
-			max-height: 100%;
 		}
 	}
 </style>
