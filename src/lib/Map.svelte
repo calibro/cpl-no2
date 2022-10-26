@@ -7,6 +7,7 @@
 		gridBoundary,
 		searchMode
 	} from '$lib/stores';
+	import { base } from '$app/paths';
 	import { onMount, onDestroy } from 'svelte';
 	import { Map, NavigationControl, GeolocateControl, Marker } from 'maplibre-gl';
 	import { feature, bbox, merge } from 'topojson-client';
@@ -129,7 +130,8 @@
 		map = new Map({
 			container: mapContainer,
 			//style: 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json',
-			style: `https://api.maptiler.com/maps/toner/style.json?key=${MAPTILER_API_KEY}`,
+			//style: `https://api.maptiler.com/maps/toner/style.json?key=${MAPTILER_API_KEY}`,
+			style: `${base}/toner-custom.json`,
 			bounds: $bboxGrid,
 			fitBoundsOptions: { padding: 20 },
 			maxZoom: 16,
